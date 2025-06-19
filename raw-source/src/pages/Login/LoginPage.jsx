@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Input from '../../components/Input';
 import './LoginPage.css';
+import MainButton from '../../features/ui/Button/MainButton';
+import LoginTitle from '../../features/ui/Title/LoginTitle';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -12,7 +14,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
-      <h2>RawSource</h2>
+      <LoginTitle title={"RawSource"} />
       <Input
         placeholder="Usuario"
         type="text"
@@ -28,7 +30,7 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <p className="forgot-password">Olvidaste tu contraseña?</p>
-      <button className="login-button" onClick={handleLogin}>INICIAR SESION</button>
+      <MainButton handleClick={handleLogin} text={"INICIAR SESSION"} />
     </div>
   );
 }
