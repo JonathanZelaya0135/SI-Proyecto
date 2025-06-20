@@ -1,10 +1,10 @@
 import { useState } from "react";
-import axios from "../../api/axios"; // import your configured instance
+import axios from "../../api/axios";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       const response = await axios.post("/auth/login", {
-        email: username, // backend expects "email", not "username"
+        email, 
         password,
       });
 
@@ -47,9 +47,9 @@ export default function LoginPage() {
       <input
         className="login-input"
         type="text"
-        placeholder="Usuario"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <input

@@ -17,7 +17,7 @@ export default function BuyerPage() {
 
   const handleBuy = (productId) => {
     alert(`Comprar producto con ID: ${productId}`);
-    // You can later call the orders API here
+    // Call the orders API here to create an order?
   };
 
   return (
