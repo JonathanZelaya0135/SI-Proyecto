@@ -1,34 +1,72 @@
-import { useState } from 'react';
-import Input from '../../components/Input';
-import './LoginPage.css';
+import { useState } from "react";
+import axios from "../../api/axios"; // import your configured instance
+import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log('Login clicked with:', { username, password });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("/auth/login", {
+        email: username, // backend expects "email", not "username"
+        password,
+      });
+
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Redirect based on role
+      switch (user.role) {
+        case "BUYER":
+          navigate("/buyer");
+          break;
+        case "PROVIDER":
+          navigate("/provider");
+          break;
+        case "ADMIN":
+          navigate("/admin");
+          break;
+        default:
+          navigate("/login");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Usuario o contraseña incorrectos");
+    }
   };
 
   return (
     <div className="login-container">
       <h2>RawSource</h2>
-      <Input
-        placeholder="Usuario"
+
+      <input
+        className="login-input"
         type="text"
-        defaultValue="Usuario"
+        placeholder="Usuario"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <Input
-        placeholder="Contraseña"
+
+      <input
+        className="login-input"
         type="password"
-        message="Contraseña"
+        placeholder="Contraseña"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <p className="forgot-password">Olvidaste tu contraseña?</p>
-      <button className="login-button" onClick={handleLogin}>INICIAR SESION</button>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <p className="forgot-password">¿Olvidaste tu contraseña?</p>
+
+      <button className="login-button" onClick={handleLogin}>
+        INICIAR SESIÓN
+      </button>
     </div>
   );
 }
