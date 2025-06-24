@@ -1,0 +1,54 @@
+table {
+  border-collapse: collapse;
+  border-radius: 10px;
+  width: 100%;
+  table-layout: auto;
+}
+
+/* Change color tone every other row */
+tr:nth-child(odd) {
+  background-color: #FBFDF2;
+}
+
+tr:nth-child(even) {
+  background-color: #F4F9DC;
+}
+tr th{
+  background-color: #F4F9DC;
+}
+
+th, td {
+  padding: 10px 15px; /* Smaller padding gives more flexibility */
+  border-bottom: 1px solid #000;
+  min-width: 50px;
+  max-width: 300px;
+  word-break: break-word;
+  text-align: center;
+}
+
+/* No border on the bottom of the last row */
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Set border radius for the first row (header) */
+th:first-child {
+  border-radius: 20px 0 0 0;
+}
+
+th:last-child {
+  border-radius: 0 20px 0 0;
+}
+
+/* Set border radius for the last row */
+tr:last-child td:first-child {
+  border-radius: 0 0 0 20px;
+}
+
+tr:last-child td:last-child {
+  border-radius: 0 0 20px 0;
+}
+
+.button{
+  padding: 0;
+}

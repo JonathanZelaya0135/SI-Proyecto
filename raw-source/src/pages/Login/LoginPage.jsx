@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "../../api/axios";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
+import LoginTitle from "../../features/ui/Title/LoginTitle";
+import Input from "../../features/ui/Input/Input";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -19,6 +21,7 @@ export default function LoginPage() {
       const { token, user } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      console.log(JSON.stringify(user));
 
       // Redirect based on role
       switch (user.role) {
@@ -42,23 +45,9 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
-      <h2>RawSource</h2>
-
-      <input
-        className="login-input"
-        type="text"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <input
-        className="login-input"
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <LoginTitle title={"RawSource"} />
+        <Input type={"text"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input type={"text"} placeholder={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 

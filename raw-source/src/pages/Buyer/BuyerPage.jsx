@@ -27,6 +27,7 @@ export default function BuyerPage() {
         {products.map(product => (
           <ProductCard key={product.id} product={product} onBuy={handleBuy} />
         ))}
+        {console.log(products)}
       </div>
     </div>
   );
