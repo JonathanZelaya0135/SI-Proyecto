@@ -1,36 +1,61 @@
-import { useState } from 'react';
-import Input from '../../components/Input';
-import './LoginPage.css';
-import MainButton from '../../features/ui/Button/MainButton';
-import LoginTitle from '../../features/ui/Title/LoginTitle';
+import { useState } from "react";
+import axios from "../../api/axios";
+import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
+import LoginTitle from "../../features/ui/Title/LoginTitle";
+import Input from "../../features/ui/Input/Input";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log('Login clicked with:', { username, password });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("/auth/login", {
+        email, 
+        password,
+      });
+
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      console.log(JSON.stringify(user));
+
+      // Redirect based on role
+      switch (user.role) {
+        case "BUYER":
+          navigate("/buyer");
+          break;
+        case "PROVIDER":
+          navigate("/provider");
+          break;
+        case "ADMIN":
+          navigate("/admin");
+          break;
+        default:
+          navigate("/login");
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Usuario o contraseña incorrectos");
+    }
   };
 
   return (
     <div className="login-container">
       <LoginTitle title={"RawSource"} />
-      <Input
-        placeholder="Usuario"
-        type="text"
-        defaultValue="Usuario"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <Input
-        placeholder="Contraseña"
-        type="password"
-        message="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <p className="forgot-password">Olvidaste tu contraseña?</p>
-      <MainButton handleClick={handleLogin} text={"INICIAR SESSION"} />
+        <Input type={"text"} placeholder={"Email"} value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input type={"text"} placeholder={"Password"} value={password} onChange={(e) => setPassword(e.target.value)} />
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <p className="forgot-password">¿Olvidaste tu contraseña?</p>
+
+      <button className="login-button" onClick={handleLogin}>
+        INICIAR SESIÓN
+      </button>
     </div>
   );
 }

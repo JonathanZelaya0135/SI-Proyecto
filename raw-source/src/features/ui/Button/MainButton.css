@@ -1,6 +1,7 @@
 .main-button {
   padding: 0.5rem 1rem;
-  width: 200px;
+  width: fit-content;
+  min-height: 32px;
   background-color: #ff9900;
   color: white;
   border: none;

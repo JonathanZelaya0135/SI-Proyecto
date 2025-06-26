@@ -2,6 +2,6 @@ import './LoginTitle.css'
 
 export default function LoginTitle({ title }){
     return(
-        <h1 class="login-title">{ title }</h1>
+        <h1 className="login-title">{ title }</h1>
     )
 }

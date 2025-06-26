@@ -1,6 +1,6 @@
 import './Input.css'
 
-export default function Input({ placeholder, type, value, onChange }) {
+export default function Input({ type, placeholder, value, onChange }) {
   return (
     <div className="input-group">
       <input

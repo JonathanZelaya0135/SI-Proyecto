@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
+.sidebar {
+  
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #f26e21;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 20px;
+}
+
+/* Header */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Navigation */
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-nav li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sidebar-nav li:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+/* Footer */
+.sidebar-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-info p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.user-info span {
+  font-size: 0.8rem;
+}
+
+/* Page content wrapper to allow sliding */
+.page-content {
+  margin-left: 250px; /* same as sidebar width */
+  padding: 1rem;
+}
