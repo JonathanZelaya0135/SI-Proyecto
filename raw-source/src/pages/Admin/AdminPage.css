@@ -1,0 +1,25 @@
+.page-container{
+    display: flex;
+    flex-grow: 1;
+    background-color: #FBFDF2;
+}
+
+.page-content{
+    display: flex;
+    padding: 16px 8px;
+    width: 100%;
+    margin: 0;
+    flex-direction: column;
+}
+
+.cards-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+.table-container{
+    flex-grow: 1;
+    margin: 1rem;
+}

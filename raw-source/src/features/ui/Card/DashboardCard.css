@@ -3,14 +3,18 @@
   box-shadow: 5px 5px 3px #C8C8C8;
   border-radius: 16px;
   padding: 16px;
-  max-width: 16rem;
+  width: 10rem;
+  height: 10rem;
   text-align: center;
+  border: 2px solid #F26A1B;
+  margin: 2rem;
+  align-content: center;
 }
 
 .dashboard-card-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin: auto;
 }
 
 .dashboard-card-value {
@@ -23,4 +27,5 @@
 .dashboard-card-label {
   font-size: 0.875rem;
   color: #6b7280;
+  margin: auto;
 }

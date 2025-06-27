@@ -41,7 +41,7 @@ export default function AppMenu() {
     ADMIN: [
       "handleClickHomeAdmin",
       "handleClickInventoryAdmin",
-      "handleClickOrdersAdmin",
+      "handleClickUsersAdmin",
     ],
     BUYER: [
       "handleClickHomeBuyer",

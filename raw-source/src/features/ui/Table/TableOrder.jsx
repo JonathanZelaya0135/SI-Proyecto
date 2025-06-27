@@ -36,7 +36,7 @@ export default function TableOrder({ data, headers, onDelete }) {
                     {headers.map((header) => (
                         <th key={header.key}>{header.label}</th>
                     ))}
-                    <th>Delete</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@ export default function TableOrder({ data, headers, onDelete }) {
                             <td key={cellIndex}>{row[header.key]}</td>
                         ))}
                         <td class="button">
-                            <DeleteButton handleClick={() => onDelete(row.orderNumber)} text={"Eliminar"} />
+                            <DeleteButton handleClick={() => onDelete(row.orderNumber, row.id)} text={"Eliminar"} />
                         </td>
                     </tr>
                 ))}

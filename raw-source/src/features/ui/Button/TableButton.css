@@ -1,4 +1,4 @@
-button {
+.edit-button{
     background: transparent;
     border: none;
     text-decoration: underline;
@@ -9,9 +9,6 @@ button {
     justify-content: center;
     width: 100%;
     height: 100%;
-}
-
-.edit-button{
     color: #4D4D4D;
 }
 .edit-button:hover{
@@ -19,6 +16,16 @@ button {
 }
 
 .delete-button{
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
     color: #C11010;
 }
 

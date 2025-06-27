@@ -3,6 +3,8 @@ import LoginPage from './pages/Login/LoginPage';
 import BuyerPage from './pages/Buyer/BuyerPage';
 import ProviderPage from './pages/Provider/ProviderPage';
 import AdminPage from './pages/Admin/AdminPage';
+import AdminUsers from './pages/Admin/AdminUsers';
+import BuyerOrders from './pages/Buyer/BuyerOrders';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/provider" element={<ProviderPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/buyer" element={<BuyerPage />} />
+        <Route path="/admin/users" element={<AdminUsers />} />
+        <Route path="/buyer/orders" element={<BuyerOrders />} />
       </Routes>
     </Router>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import ProductCard from '../../components/ProductCard/ProductCardBuyer';
+import AppMenu from '../../features/ui/Menu/Menu';
 
 export default function BuyerPage() {
   const [products, setProducts] = useState([]);
@@ -22,6 +23,7 @@ export default function BuyerPage() {
 
   return (
     <div style={{ padding: '20px' }}>
+      <AppMenu />
       <h2>Productos Disponibles</h2>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {products.map(product => (

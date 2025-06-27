@@ -2,7 +2,7 @@
 export const createHandlers = (navigate) => ({
   handleClickHomeProvider: () => navigate("/admin/dashboard"),
   handleClickHomeBuyer: () => navigate("/user/products"),
-  handleClickHomeAdmin: () => navigate("/admin/inventory"),
+  handleClickHomeAdmin: () => navigate("/admin"),
 
   handleClickInventoryBuyer: () => navigate("/user/inventory"),
   handleClickUsersAdmin: () => navigate("/admin/users"),
@@ -10,7 +10,7 @@ export const createHandlers = (navigate) => ({
 
 
   handleClickOrdersProvider: () => navigate("/provider/orders"),
-  handleClickOrdersBuyer: () => navigate("/user/orders"),
+  handleClickOrdersBuyer: () => navigate("/buyer/orders"),
 
   handleClickProfile: () => navigate("/profile"),
   handleClickLogout: () => {
