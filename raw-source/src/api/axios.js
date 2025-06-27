@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://localhost:8443/api',
+  baseURL: 'https://rawsourceapi.up.railway.app/api/ ',
   headers: {
     'Content-Type': 'application/json',
   },
