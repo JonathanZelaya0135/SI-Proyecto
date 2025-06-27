@@ -1,3 +1,7 @@
+import AppMenu from "../../features/ui/Menu/Menu";
+
 export default function ProviderPage() {
-  return <h2>Bienvenido, Proveedor</h2>;
+  return(
+    <AppMenu />
+  )
 }

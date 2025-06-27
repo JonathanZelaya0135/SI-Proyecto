@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
+
+.title {
+  font-family: "Rochester", cursive;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+}
 
 
 .sidebar {
-  
   top: 0;
   left: 0;
   height: 100vh;
@@ -18,20 +25,20 @@
   padding: 20px;
 }
 
-/* Header */
 .sidebar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .sidebar-header h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 2rem;
 }
 
-/* Navigation */
+
 .sidebar-nav ul {
   list-style: none;
   padding: 0;
@@ -44,6 +51,7 @@
   margin-bottom: 1.5rem;
   cursor: pointer;
   transition: background-color 0.3s;
+  padding: 0.5rem;
 }
 
 .sidebar-nav li:hover {
@@ -72,12 +80,13 @@
   font-weight: bold;
 }
 
-.user-info span {
-  font-size: 0.8rem;
+
+
+.page-content {
+  margin-left: 250px;
+  padding: 1rem;
 }
 
-/* Page content wrapper to allow sliding */
-.page-content {
-  margin-left: 250px; /* same as sidebar width */
-  padding: 1rem;
+.user-info .role{
+  font-weight: 200;
 }

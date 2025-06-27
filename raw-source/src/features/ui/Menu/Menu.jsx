@@ -1,40 +1,93 @@
-
+import TransparentIconButton from '../Button/TransparentButton';
 import './Menu.css';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { createHandlers } from '../../handlers/menuHandlers';
+
 
 export default function AppMenu() {
+  
+
+  const navigate = useNavigate();
+  const handlers= createHandlers(navigate);
+
+  
+  const name = localStorage.getItem("username");
+  const role = localStorage.getItem("role");
+  if(role == null){
+    navigate("/login");
+    return null;
+  };
+
+  const iconMap = {
+    handleClickHomeAdmin: { icon: "home", text: "Inicio" },
+    handleClickHomeBuyer: { icon: "home", text: "Inicio" },
+    handleClickHomeProvider: { icon: "home", text: "Inicio" },
+
+    handleClickInventoryAdmin: { icon: "inventory", text: "Inventario" },
+    handleClickInventoryBuyer: { icon: "inventory", text: "Mi inventario" },
+    handleClickUsersAdmin: { icon: "group", text: "Usuarios" },
+    handleClickShoppingBuyer: { icon: "shopping_cart", text: "Mis productos" },
+
+    handleClickOrdersAdmin: { icon: "edit_square", text: "Mis ordenes" },
+    handleClickOrdersBuyer: { icon: "list", text: "Mis ordenes" },
+    handleClickOrdersProvider: { icon: "list", text: "Mis ordenes" },
+
+    handleClickProfile: { icon: "person" },
+    handleClickLogout: { icon: "logout" },
+  };
+
+  // Determine which handlers to use for the menu
+  const handlerKeys = {
+    ADMIN: [
+      "handleClickHomeAdmin",
+      "handleClickInventoryAdmin",
+      "handleClickOrdersAdmin",
+    ],
+    BUYER: [
+      "handleClickHomeBuyer",
+      "handleClickInventoryBuyer",
+      "handleClickOrdersBuyer",
+    ],
+    PROVIDER: [
+      "handleClickHomeProvider",
+      "handleClickShoppingBuyer", 
+      "handleClickOrdersProvider",
+    ],
+  };
+
+  const menuItems = handlerKeys[role].map((key) => ({
+    icon: iconMap[key]?.icon ?? "help",
+    text: iconMap[key]?.text ?? key,
+    onClick: handlers[key],
+  }));
+
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h2>RawSource</h2>
-        <span className="material-icons">menu</span>
+        <h2 className="title">RawSource</h2>
+        <TransparentIconButton icon={"menu"} />
       </div>
 
       <nav className="sidebar-nav">
         <ul>
-          <li>
-            <span className="material-icons">home</span>
-            <span>Inicio</span>
-          </li>
-          <li>
-            <span className="material-icons">shopping_cart</span>
-            <span>Mis productos</span>
-          </li>
-          <li>
-            <span className="material-icons">list</span>
-            <span>Mis ordenes</span>
-          </li>
+          {menuItems.map((item, index) => (
+            <li key={index}>
+              <TransparentIconButton handleClick={item.onClick} icon={item.icon} text={item.text} />
+            </li>
+          ))}
         </ul>
       </nav>
 
       <div className="sidebar-footer">
         <div className="user-info">
-          <span className="material-icons">person</span>
+          <TransparentIconButton handleClick={handlers.handleClickProfile} icon={"person"} />
           <div>
-            <p>Usuario</p>
-            <span>Proveedor</span>
+            <p>{ name }</p>
+            <p className="role">{ role }</p>
+            {/* Hacer nombre de usuario y rol dinamicos pls :) */}
           </div>
         </div>
-        <span className="material-icons">logout</span>
+        <TransparentIconButton handleClick={handlers.handleClickLogout} icon={"logout"}/>
       </div>
     </div>
   );

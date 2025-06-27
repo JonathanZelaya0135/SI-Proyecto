@@ -1,3 +1,9 @@
+import AppMenu from "../../features/ui/Menu/Menu";
+
 export default function AdminPage() {
-  return <h2>Bienvenido, Administrador</h2>;
+  return (
+    <div className="page-container">
+      <AppMenu />
+    </div>
+  )
 }
