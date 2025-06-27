@@ -1,0 +1,9 @@
+div{
+    display: block;
+    padding: 100px;
+}
+
+.dashboard-cards{
+    display: flex;
+    justify-content: space-between;
+}
