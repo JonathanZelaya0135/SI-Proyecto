@@ -1,12 +1,12 @@
-
 export const createHandlers = (navigate) => ({
-  handleClickHomeProvider: () => navigate("/admin/dashboard"),
+  handleClickHomeProvider: () => navigate("/provider"),
   handleClickHomeBuyer: () => navigate("/user/products"),
   handleClickHomeAdmin: () => navigate("/admin"),
 
   handleClickInventoryBuyer: () => navigate("/user/inventory"),
+  handleClickInventoryProvider: () => navigate("/provider/products"),
   handleClickUsersAdmin: () => navigate("/admin/users"),
-  handleClickInventoryAdmin: () => navigate("/admin/inventory"),
+  handleClickProductsAdmin: () => navigate("/admin/products"),
 
 
   handleClickOrdersProvider: () => navigate("/provider/orders"),
@@ -17,4 +17,3 @@ export const createHandlers = (navigate) => ({
     localStorage.clear();
     navigate("/login")}
   });
-

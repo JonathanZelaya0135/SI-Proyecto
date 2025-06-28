@@ -1,6 +1,6 @@
 import TransparentIconButton from '../Button/TransparentButton';
 import './Menu.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createHandlers } from '../../handlers/menuHandlers';
 
 
@@ -23,8 +23,9 @@ export default function AppMenu() {
     handleClickHomeBuyer: { icon: "home", text: "Inicio" },
     handleClickHomeProvider: { icon: "home", text: "Inicio" },
 
-    handleClickInventoryAdmin: { icon: "inventory", text: "Inventario" },
+    handleClickProductsAdmin: { icon: "inventory", text: "Inventario" },
     handleClickInventoryBuyer: { icon: "inventory", text: "Mi inventario" },
+    handleClickInventoryProvider: { icon: "inventory", text: "Mi inventario" },
     handleClickUsersAdmin: { icon: "group", text: "Usuarios" },
     handleClickShoppingBuyer: { icon: "shopping_cart", text: "Mis productos" },
 
@@ -40,7 +41,7 @@ export default function AppMenu() {
   const handlerKeys = {
     ADMIN: [
       "handleClickHomeAdmin",
-      "handleClickInventoryAdmin",
+      "handleClickProductsAdmin",
       "handleClickUsersAdmin",
     ],
     BUYER: [
@@ -50,7 +51,7 @@ export default function AppMenu() {
     ],
     PROVIDER: [
       "handleClickHomeProvider",
-      "handleClickShoppingBuyer", 
+      "handleClickInventoryProvider", 
       "handleClickOrdersProvider",
     ],
   };

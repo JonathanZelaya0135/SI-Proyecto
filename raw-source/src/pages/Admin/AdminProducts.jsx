@@ -1,8 +1,6 @@
 import AppMenu from "../../features/ui/Menu/Menu";
 import MainTitle from "../../features/ui/Title/MainTitle"
-import MainButton from "../../features/ui/Button/MainButton";
-import AddProductModal from "../../features/ui/Modal/AddProductModal";
-import "./ProviderPage.css";
+import "./AdminPage.css";
 import { useState, useEffect } from 'react';
 import instance from "../../api/axios";
 import { useNavigate } from 'react-router-dom';
@@ -10,17 +8,10 @@ import ProductCardAdmin from "../../components/ProductCard/ProductCardAdmin";
 
 
 
-export default function ProviderPage() {
+export default function AdminProducts() {
     const navigate = useNavigate();
     const role = localStorage.getItem("role");
-    const [showModal, setShowModal] = useState(false);
-    const [products, setProducts] = useState([])
-    const [newProducts, setNewProducts] = useState({
-      name: '',
-      description: '',
-      price: '',
-      image: ''
-    });
+    const [products, setProducts] = useState([]);
 
     const fetchProducts = async () => {
         try {
@@ -54,39 +45,12 @@ export default function ProviderPage() {
         navigate("/login");
         return null;
      };
-    const handleOpenModal = () => {
-      setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-      setShowModal(false);
-    };
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setNewProducts(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleAddProduct = async () => {
-      try {
-        await instance.post('/products/', newProducts);
-        fetchProducts(); 
-        setShowModal(false);
-        setNewProducts({ name: '', email: '', role: '', password: '' });
-      } catch (err) {
-        console.error('Failed to register user:', err);
-      }
-    };
 
   return (
     <div className="page-container">
-      {showModal && <AddProductModal product={newProducts} handleChange={handleChange} handleCloseModal={handleCloseModal} handleAddProduct={handleAddProduct}/>}
       <AppMenu />
       <div className="page-content">
         <MainTitle title={"Products"} icon={"inventory"}/>
-        <div style={{display: "flex", justifyContent: "flex-end", marginRight:"2rem"}}>
-          <MainButton text={"Agregar Producto +"} handleClick={handleOpenModal}/>
-        </div>
         <div className="cards-container">
         {products.map(product => (
             <ProductCardAdmin key={product.id} product={product} onDelete={handleDeleteProduct} />
