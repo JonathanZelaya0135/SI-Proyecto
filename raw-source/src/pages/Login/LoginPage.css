@@ -25,11 +25,16 @@
   border: 1px solid #ccc;
 }
 
-.forgot-password {
+.register-link {
   font-size: 0.85rem;
   color: #555;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+}
+
+.register-link:hover {
+  color: #ff9900;
+  cursor: pointer;
 }
 
 .login-button {
