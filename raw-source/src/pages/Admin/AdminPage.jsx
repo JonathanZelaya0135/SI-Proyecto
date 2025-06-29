@@ -1,13 +1,11 @@
 import AppMenu from "../../features/ui/Menu/Menu";
-import MainTitle from "../../features/ui/Title/MainTitle"
+import MainTitle from "../../features/ui/Title/MainTitle";
 import "./AdminPage.css";
 import DashboardCard from "../../features/ui/Card/DashboardCard";
 import TableDashboard from "../../features/ui/Table/TableDashboard";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import instance from "../../api/axios";
-import { useNavigate } from 'react-router-dom';
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPage() {
   const navigate = useNavigate();
@@ -18,37 +16,47 @@ export default function AdminPage() {
   const [ordersCount, setOrdersCount] = useState(0);
 
   useEffect(() => {
-    instance.get('/orders')
+    instance
+      .get("/orders")
       .then((res) => {
         const orders = res.data;
-        setTableData(orders);
-        setOrdersCount(orders.length)
+
+        const flattened = orders.map((order) => ({
+          orderNumber: order.id,
+          buyer: order.buyerName,
+          product: order.items[0]?.productName ?? "--",
+          quantity: order.items[0]?.quantity ?? "--",
+        }));
+
+        setTableData(flattened);
+        setOrdersCount(orders.length);
       })
       .catch((err) => {
-        console.error('Error fetching orders:', err);
+        console.error("Error fetching orders:", err);
       });
-      
   }, []);
 
   useEffect(() => {
-  instance.get('/products')
-    .then((res) => {
-      const products = res.data;
-      setUsersCount(products.length);
-    })
-    .catch((err) => {
-      console.error('Error fetching products:', err);
-    });
-}, []);
-
-  useEffect(() => {
-    instance.get('/users')
+    instance
+      .get("/products")
       .then((res) => {
-        const users = res.data;
-        setProductCount(users.length); 
+        const products = res.data;
+        setUsersCount(products.length);
       })
       .catch((err) => {
-        console.error('Error fetching users:', err);
+        console.error("Error fetching products:", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    instance
+      .get("/users")
+      .then((res) => {
+        const users = res.data;
+        setProductCount(users.length);
+      })
+      .catch((err) => {
+        console.error("Error fetching users:", err);
       });
   }, []);
 
@@ -60,10 +68,10 @@ export default function AdminPage() {
         { label: "Estado", key: "status" }
     ];
 
-    if(role == null){
+  if (role == null) {
     navigate("/login");
     return null;
-  };
+  }
 
   return (
     <div className="page-container">
@@ -74,11 +82,12 @@ export default function AdminPage() {
           <DashboardCard title={"Productos Registrados"} value={usersCount} label={"ultimos 7 dias"}/>
           <DashboardCard title={"Usuarios Registrados"} value={productsCount} label={"Junio 2025"}/>
           <DashboardCard title={"Ordenes Realizadas"} value={ordersCount} label={"ultimos 7 dias"}/>
+
         </div>
         <div className="table-container">
-          <TableDashboard data={tableData} headers={tableHeaders}/>
+          <TableDashboard data={tableData} headers={tableHeaders} />
         </div>
       </div>
     </div>
-  )
+  );
 }
