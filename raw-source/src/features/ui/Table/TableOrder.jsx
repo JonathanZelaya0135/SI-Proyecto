@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import DeleteButton from '../Button/DeleteButton';
 import './Table.css';
 
 export default function TableOrder({ data, headers, onDelete }) {
-    const [tableData, setTableData] = useState(data);
     if (!data || data.length === 0) {
         return (
             <table>
@@ -16,19 +14,14 @@ export default function TableOrder({ data, headers, onDelete }) {
                 </thead>
                 <tbody>
                     <tr>
-                        {headers.map((index) => (
-                            <td key={index}>--</td>
+                        {headers.map((header) => (
+                            <td key={header.key}>--</td>
                         ))}
                     </tr>
                 </tbody>
             </table>
         );
     }
-    const handleDelete = (indexToDelete) => {
-        const newData = tableData.filter((_, index) => index !== indexToDelete);
-        setTableData(newData);
-    };
-
     return (
         <table>
             <thead>
@@ -45,8 +38,8 @@ export default function TableOrder({ data, headers, onDelete }) {
                         {headers.map((header, cellIndex) => (
                             <td key={cellIndex}>{row[header.key]}</td>
                         ))}
-                        <td class="button">
-                            <DeleteButton handleClick={() => onDelete(row.orderNumber, row.id)} text={"Eliminar"} />
+                        <td className="button">
+                            <DeleteButton handleClick={() => onDelete(row.id)} text={"Eliminar"} />
                         </td>
                     </tr>
                 ))}

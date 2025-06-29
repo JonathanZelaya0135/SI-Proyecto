@@ -21,6 +21,7 @@ export default function LoginPage() {
       const { token, user } = response.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("id", user.id);
       localStorage.setItem("role", user.role);
       localStorage.setItem("username", user.name)
       console.log(JSON.stringify(user));

@@ -5,7 +5,7 @@ import DashboardCard from "../../features/ui/Card/DashboardCard";
 import TableDashboard from "../../features/ui/Table/TableDashboard";
 import { useState, useEffect } from 'react';
 import instance from "../../api/axios";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -70,8 +70,8 @@ export default function AdminPage() {
       <div className="page-content">
         <MainTitle title={"Dashboard"} icon={"query_stats"}/>
         <div className="cards-container">
-          <DashboardCard title={"Productos Registrados"} value={productsCount} label={"ultimos 7 dias"}/>
-          <DashboardCard title={"Usuarios Registrados"} value={usersCount} label={"Junio 2025"}/>
+          <DashboardCard title={"Productos Registrados"} value={usersCount} label={"ultimos 7 dias"}/>
+          <DashboardCard title={"Usuarios Registrados"} value={productsCount} label={"Junio 2025"}/>
           <DashboardCard title={"Ordenes Realizadas"} value={ordersCount} label={"ultimos 7 dias"}/>
         </div>
         <div className="table-container">
