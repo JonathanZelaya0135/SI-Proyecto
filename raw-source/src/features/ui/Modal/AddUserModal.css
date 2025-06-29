@@ -84,3 +84,11 @@
 .modal-content button:hover {
   background-color: #fabc60;
 }
+
+.modal-content .no{
+  background-color: #C8170C;
+}
+
+.modal-content .no:hover {
+  background-color: #EE2F2F;
+}
