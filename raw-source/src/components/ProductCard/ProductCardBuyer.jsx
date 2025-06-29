@@ -1,11 +1,23 @@
-import './ProductCardBuyer.css';
+import "./ProductCardBuyer.css";
 
-export default function ProductCardBuyer({ product, quantity = 1, onQuantityChange, onBuy }) {
+export default function ProductCardBuyer({
+  product,
+  quantity = 1,
+  onQuantityChange,
+  onBuy,
+}) {
   return (
     <div className="product-card">
-      {product.image && (
-        <img src={product.image} alt={product.name} className="product-image" />
-      )}
+      <img
+        src={
+          product.image && product.image.trim() !== ""
+            ? product.image
+            : "/images/placeholder-image.png"
+        }
+        alt={product.name}
+        className="product-image"
+      />
+
       <h3 className="product-name">{product.name}</h3>
 
       <div className="product-details">

@@ -19,7 +19,6 @@ export default function BuyerPage() {
       .get("/products")
       .then((res) => {
         setProducts(res.data);
-        // Initialize quantity state
         const initialQuantities = {};
         res.data.forEach((p) => (initialQuantities[p.id] = 1));
         setQuantities(initialQuantities);

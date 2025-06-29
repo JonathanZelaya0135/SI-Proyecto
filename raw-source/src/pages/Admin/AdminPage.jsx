@@ -26,10 +26,13 @@ export default function AdminPage() {
           buyer: order.buyerName,
           product: order.items[0]?.productName ?? "--",
           quantity: order.items[0]?.quantity ?? "--",
+          status: order.status
         }));
 
         setTableData(flattened);
         setOrdersCount(orders.length);
+
+        console.log("Sample row:", flattened[0]);
       })
       .catch((err) => {
         console.error("Error fetching orders:", err);
@@ -65,6 +68,7 @@ export default function AdminPage() {
     { label: "Comprador", key: "buyer" },
     { label: "Producto", key: "product" },
     { label: "Cantidad", key: "quantity" },
+    { label: "Estado", key: "status" },
   ];
 
   if (role == null) {
@@ -77,7 +81,7 @@ export default function AdminPage() {
       <AppMenu />
       <div className="page-content">
         <MainTitle title={"Dashboard"} icon={"query_stats"} />
-        <div className="admin-cards-container">
+        <div className="dashboard-cards-container">
           <DashboardCard
             title={"Productos Registrados"}
             value={usersCount}

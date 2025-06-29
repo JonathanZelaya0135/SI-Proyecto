@@ -7,6 +7,8 @@ import BuyerPage from './pages/Buyer/BuyerPage';
 import BuyerInventory from './pages/Buyer/BuyerInventory';
 import BuyerOrders from './pages/Buyer/BuyerOrders';
 import ProviderPage from './pages/Provider/ProviderPage';
+import ProviderOrders from './pages/Provider/ProviderOrders';
+import ProfilePage from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/buyer/inventory" element={<BuyerInventory />} />
         <Route path="/buyer/orders" element={<BuyerOrders />} />
         <Route path="/provider" element={<ProviderPage />} />
+        <Route path="/provider/orders" element={<ProviderOrders />} />
+        <Route path="/profile" element={<ProfilePage />} />
         <Route path="/provider/products" element={<Navigate to={"/provider"} />} />
       </Routes>
     </Router>

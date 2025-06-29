@@ -20,8 +20,8 @@ export default function AddUserModal({ user, handleChange, handleAddUser, handle
                         <option value="BUYER">Comprador</option>
                     </select>
                     <div className="modal-actions">
+                        <button className="no" type="button" onClick={handleCloseModal}>Cancelar</button>
                         <button type="submit">Crear</button>
-                        <button type="button" onClick={handleCloseModal}>Cancelar</button>
                     </div>
                 </form>
             </div>

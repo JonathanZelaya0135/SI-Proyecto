@@ -2,7 +2,7 @@ import EditButton from '../Button/EditButton';
 import DeleteButton from '../Button/DeleteButton';
 import './Table.css';
 
-export default function TableManage({ data, headers, onEdit, onDelete }) {
+export default function TableManage({ data, headers, onSend, onDelete }) {
     if (!data || data.length === 0) {
         return (
             <table>
@@ -35,8 +35,8 @@ export default function TableManage({ data, headers, onEdit, onDelete }) {
                     {headers.map((header) => (
                         <th key={header.key}>{header.label}</th>
                     ))}
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Enviar</th>
+                    <th>Eliminar</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@ export default function TableManage({ data, headers, onEdit, onDelete }) {
                             <td key={cellIndex}>{row[header.key]}</td>
                         ))}
                         <td className="button">
-                            <EditButton handleClick={() => onEdit(index)} text={"Editar"} />
+                            <EditButton handleClick={() => onSend(index)} text={"Enviar"} />
                         </td>
                         <td className="button">
                             <DeleteButton handleClick={() => onDelete(row.orderNumber)} text={"Eliminar"} />
