@@ -11,7 +11,7 @@ export default function BuyerOrders() {
     { label: "No. Orden", key: "id" },
     { label: "Producto", key: "productName" },
     { label: "Cantidad", key: "quantity" },
-    { label: "Monto", key: "totalOrder" },
+    { label: "Monto ($)", key: "totalOrder" },
     { label: "Estado", key: "status" },
   ];
 
@@ -20,7 +20,6 @@ export default function BuyerOrders() {
       .then((res) => {
         const orders = res.data;
 
-        // Flatten the first item in the "items" array for display
         const flattened = orders.map(order => ({
           ...order,
           productName: order.items[0]?.productName ?? '--',
@@ -35,10 +34,18 @@ export default function BuyerOrders() {
   }, []);
 
   const handleDelete = (orderId) => {
-    const newData = tableData.filter(row => row.id !== orderId);
-    setTableData(newData);
-    console.log('Deleted order:', orderId);
-  };
+  instance.delete(`/orders/${orderId}`)
+    .then(() => {
+      const newData = tableData.filter(row => row.id !== orderId);
+      setTableData(newData);
+      console.log('Deleted order:', orderId);
+    })
+    .catch(err => {
+      console.error('Error deleting order:', err);
+      alert('Hubo un error al eliminar la orden.');
+    });
+};
+
 
   return (
     <div className="page-container">
