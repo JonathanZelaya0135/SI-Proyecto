@@ -13,18 +13,23 @@ import ProductCardAdmin from "../../components/ProductCard/ProductCardAdmin";
 export default function ProviderPage() {
     const navigate = useNavigate();
     const role = localStorage.getItem("role");
+    const token = localStorage.getItem("token");
+    const providerId = localStorage.getItem("id");
+    const providerName = localStorage.getItem("username");
     const [showModal, setShowModal] = useState(false);
     const [products, setProducts] = useState([])
     const [newProducts, setNewProducts] = useState({
       name: '',
       description: '',
       price: '',
-      image: ''
+      image: '',
+      providerId: providerId,
+      providerName: providerName
     });
 
     const fetchProducts = async () => {
         try {
-            const res = await instance.get('/products');
+            const res = await instance.get(`/products/provider/${providerId}`);
             setProducts(res.data);
         } catch (err) {
             console.error('Error fetching products:', err);
@@ -63,16 +68,35 @@ export default function ProviderPage() {
     };
 
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      setNewProducts(prev => ({ ...prev, [name]: value }));
-    };
+  const { name, value } = e.target;
+
+  setNewProducts((prevState) => ({
+    ...prevState,
+    [name]: name === "price" ? Number(value) : value
+  }));
+};
+
 
     const handleAddProduct = async () => {
-      try {
-        await instance.post('/products/', newProducts);
+  console.log("Payload:", JSON.stringify(newProducts, null, 2));
+
+  try {
+    await instance.post('/products', newProducts, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+      });
         fetchProducts(); 
         setShowModal(false);
-        setNewProducts({ name: '', email: '', role: '', password: '' });
+        setNewProducts({
+      name: '',
+      description: '',
+      price: '',
+      image: '',
+      providerId: providerId,
+      providerName: providerName
+    });
       } catch (err) {
         console.error('Failed to register user:', err);
       }

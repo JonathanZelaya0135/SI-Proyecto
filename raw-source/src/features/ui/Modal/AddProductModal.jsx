@@ -12,7 +12,7 @@ export default function AddProductModal({ product, handleChange, handleAddProduc
                 }}>
                     <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Nombre" required />
                     <input type="text" name="description" value={product.description} onChange={handleChange} placeholder="Descripcion" required />
-                    <input type="text" name="price" value={product.price} onChange={handleChange} placeholder="Precio" required />
+                    <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Precio" required />
                     <input type="text" name="image" value={product.image} onChange={handleChange} placeholder="URL de imagen" required />
                     <div className="modal-actions">
                         <button type="submit">Crear</button>

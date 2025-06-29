@@ -15,8 +15,10 @@
 .cards-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .table-container{
