@@ -26,10 +26,13 @@ export default function AdminPage() {
           buyer: order.buyerName,
           product: order.items[0]?.productName ?? "--",
           quantity: order.items[0]?.quantity ?? "--",
+          status: order.status
         }));
 
         setTableData(flattened);
         setOrdersCount(orders.length);
+
+        console.log("Sample row:", flattened[0]);
       })
       .catch((err) => {
         console.error("Error fetching orders:", err);
@@ -61,12 +64,12 @@ export default function AdminPage() {
   }, []);
 
   const tableHeaders = [
-        { label: "No. Pedido", key: "id" },
-        { label: "Comprador", key: "buyerName" },
-        { label: "Producto", key: "items[0].productName", render: (row) => row.items?.[0]?.productName || "N/A" },
-        { label: "Cantidad", key: "items[0].quantity", render: (row) => row.items?.[0]?.quantity || "N/A" },
-        { label: "Estado", key: "status" }
-    ];
+    { label: "No. Pedido", key: "orderNumber" },
+    { label: "Comprador", key: "buyer" },
+    { label: "Producto", key: "product" },
+    { label: "Cantidad", key: "quantity" },
+    { label: "Estado", key: "status" },
+  ];
 
   if (role == null) {
     navigate("/login");
@@ -77,12 +80,23 @@ export default function AdminPage() {
     <div className="page-container">
       <AppMenu />
       <div className="page-content">
-        <MainTitle title={"Dashboard"} icon={"query_stats"}/>
+        <MainTitle title={"Dashboard"} icon={"query_stats"} />
         <div className="dashboard-cards-container">
-          <DashboardCard title={"Productos Registrados"} value={usersCount} label={"ultimos 7 dias"}/>
-          <DashboardCard title={"Usuarios Registrados"} value={productsCount} label={"Junio 2025"}/>
-          <DashboardCard title={"Ordenes Realizadas"} value={ordersCount} label={"ultimos 7 dias"}/>
-
+          <DashboardCard
+            title={"Productos Registrados"}
+            value={usersCount}
+            label={"ultimos 7 dias"}
+          />
+          <DashboardCard
+            title={"Usuarios Registrados"}
+            value={productsCount}
+            label={"Junio 2025"}
+          />
+          <DashboardCard
+            title={"Ordenes Realizadas"}
+            value={ordersCount}
+            label={"ultimos 7 dias"}
+          />
         </div>
         <div className="table-container">
           <TableDashboard data={tableData} headers={tableHeaders} />
