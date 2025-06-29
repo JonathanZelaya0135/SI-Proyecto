@@ -2,6 +2,7 @@
     display: flex;
     flex-grow: 1;
     background-color: #FBFDF2;
+    max-width: 100%;
 }
 
 .page-content{
@@ -12,11 +13,13 @@
     flex-direction: column;
 }
 
-.admin-cards-container{
+.cards-container{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .table-container{
