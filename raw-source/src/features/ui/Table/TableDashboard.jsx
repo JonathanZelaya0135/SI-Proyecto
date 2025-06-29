@@ -13,8 +13,8 @@ export default function TableDashboard({ data, headers }) {
                 </thead>
                 <tbody>
                     <tr>
-                        {headers.map((index) => (
-                            <td key={index}>--</td>
+                        {headers.map((header) => (
+                            <td key={header.key}>--</td>
                         ))}
                     </tr>
                 </tbody>
@@ -35,7 +35,9 @@ export default function TableDashboard({ data, headers }) {
                 {data.map((row, index) => (
                     <tr key={index}>
                         {headers.map((header, cellIndex) => (
-                            <td key={cellIndex}>{row[header.key]}</td>
+                            <td key={cellIndex}>
+                                {header.render ? header.render(row) : row[header.key]}
+                            </td>
                         ))}
                     </tr>
                 ))}

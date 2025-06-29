@@ -1,30 +1,38 @@
-import TableOrder from "../../features/ui/Table/TableOrder"
 import MainTitle from "../../features/ui/Title/MainTitle";
 import AppMenu from "../../features/ui/Menu/Menu";
 import { useState, useEffect } from 'react';
 import instance from "../../api/axios";
+import TableManage from "../../features/ui/Table/TableManage";
 
 
 export default function ProviderOrders(){
     const [tableData, setTableData] = useState([]);
-    const tableHeaders = [
-        { label: "No. Orden", key: "id" },
-        { label: "Producto", key: "items.productName" },
-        { label: "Cantidad", key: "items.quantity" },
-        { label: "Monto", key: "totalOrder" },
-        { label: "Estado", key: "status" },
-    ];
+     const tableHeaders = [
+    { label: "No. Pedido", key: "orderNumber" },
+    { label: "Comprador", key: "buyer" },
+    { label: "Producto", key: "product" },
+    { label: "Cantidad", key: "quantity" },
+  ];
 
     useEffect(() => {
-    instance.get('/orders')
+    instance
+      .get("/orders/provider/myorders")
       .then((res) => {
         const orders = res.data;
-        setTableData(orders);
-        })
+        console.log(orders);
+
+        const flattened = orders.map((order) => ({
+          orderNumber: order.id,
+          buyer: order.buyerName,
+          product: order.items[0]?.productName ?? "--",
+          quantity: order.items[0]?.quantity ?? "--",
+        }));
+
+        setTableData(flattened);
+      })
       .catch((err) => {
-        console.error('Error fetching users:', err);
+        console.error("Error fetching orders:", err);
       });
-      
   }, []);
     
     const handleDelete = (orderNumberToDelete) => {
@@ -39,7 +47,7 @@ export default function ProviderOrders(){
             <div className="page-content">
                 <MainTitle title={"Ordenes de Compra"} icon={"edit"}/>
                 <div className="table-container">
-                  <TableOrder data={tableData} headers={tableHeaders} onDelete={handleDelete}/>
+                  <TableManage data={tableData} headers={tableHeaders} onDelete={handleDelete} onSend={() => null/*handleSend*/}/>
                 </div>
             </div>
         </div>

@@ -12,11 +12,14 @@
     flex-direction: column;
 }
 
-.admin-cards-container{
+
+.dashboard-cards-container{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-grow: 1;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .table-container{
