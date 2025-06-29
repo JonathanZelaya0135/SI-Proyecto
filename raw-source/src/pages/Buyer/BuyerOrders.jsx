@@ -35,10 +35,18 @@ export default function BuyerOrders() {
   }, []);
 
   const handleDelete = (orderId) => {
-    const newData = tableData.filter(row => row.id !== orderId);
-    setTableData(newData);
-    console.log('Deleted order:', orderId);
-  };
+  instance.delete(`/orders/${orderId}`)
+    .then(() => {
+      const newData = tableData.filter(row => row.id !== orderId);
+      setTableData(newData);
+      console.log('Deleted order:', orderId);
+    })
+    .catch(err => {
+      console.error('Error deleting order:', err);
+      alert('Hubo un error al eliminar la orden.');
+    });
+};
+
 
   return (
     <div className="page-container">

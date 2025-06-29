@@ -49,21 +49,17 @@
 
 .quantity-dropdown {
   padding: 4px;
-  border-radius: 12px;
-  width: auto;
 }
 
 .buy-button {
   padding: 6px 12px;
-  width: auto;
-  background-color: #f26e21;
+  background-color: #0066cc;
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 .buy-button:hover {
-  width: auto;
   background-color: #004c99;
 }
