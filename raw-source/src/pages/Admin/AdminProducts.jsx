@@ -75,7 +75,6 @@ export default function AdminProducts() {
       <div className="page-content">
         <MainTitle title={"Products"} icon={"inventory"} />
 
-        {/* Search and Sort */}
         <div className="search-sort-container">
           <input
             type="text"
