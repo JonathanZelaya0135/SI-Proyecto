@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./ProductCardBuyerInventory.css";
 
 export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
-  const { productName, quantity, status, product } = item;
+  const { productName, quantity, product } = item;
   const [showInput, setShowInput] = useState(false);
   const [usageAmount, setUsageAmount] = useState(0);
 
@@ -17,47 +17,51 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
   };
 
   return (
-    <div className="product-card">
-      {product?.image && (
-        <img
-          src={product.image}
-          alt={productName}
-          className="product-image"
-        />
-      )}
+    <div className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}>
+      <img
+        src={product?.image || "/images/placeholder-image.png"}
+        alt={productName}
+        className="product-image"
+      />
       <h3 className="product-name">{productName}</h3>
+
+      {quantity === 0 && (
+        <span className="stock-badge">¡Sin stock!</span>
+      )}
 
       <div className="product-details">
         <p className="product-description">
           {product?.description || "Sin descripción"}
         </p>
-        <p className="product-stock">En inventario: {quantity}</p>
-        <p className="product-status">Estado: {status}</p>
 
-        <div className="product-actions">
-          {!showInput ? (
-            <button
-              className="buy-button"
-              onClick={() => setShowInput(true)}
-              disabled={quantity === 0}
-            >
-              Registrar uso
-            </button>
-          ) : (
-            <>
-              <input
-                type="number"
-                min="1"
-                max={quantity}
-                value={usageAmount}
-                onChange={(e) => setUsageAmount(parseInt(e.target.value))}
-                className="quantity-dropdown"
-              />
-              <button className="buy-button" onClick={handleRegister}>
-                Confirmar
+        <div className="product-right-info">
+          <p className="product-stock">En inventario: {quantity}</p>
+
+          <div className="product-actions">
+            {!showInput ? (
+              <button
+                className="buy-button"
+                onClick={() => setShowInput(true)}
+                disabled={quantity === 0}
+              >
+                Registrar uso
               </button>
-            </>
-          )}
+            ) : (
+              <>
+                <input
+                  type="number"
+                  min="1"
+                  max={quantity}
+                  value={usageAmount}
+                  onChange={(e) => setUsageAmount(parseInt(e.target.value))}
+                  className="quantity-dropdown"
+                />
+                <button className="buy-button" onClick={handleRegister}>
+                  Confirmar
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

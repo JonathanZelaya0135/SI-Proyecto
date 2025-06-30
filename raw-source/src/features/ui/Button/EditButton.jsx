@@ -1,7 +1,9 @@
 import './TableButton.css';
 
-export default function EditButton({ handleClick, text }) {
+export default function EditButton({ handleClick, text, disabled = false }) {
   return (
-    <button className="edit-button" onClick={handleClick}>{text}</button>
+    <button onClick={handleClick} disabled={disabled} className="edit-button">
+      {text}
+    </button>
   );
 }

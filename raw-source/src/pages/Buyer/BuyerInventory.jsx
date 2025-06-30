@@ -18,7 +18,9 @@ export default function BuyerInventory() {
         const inventoryId = inventoryRes.data.id;
 
         // Step 2: Get inventory products
-        const itemsRes = await axios.get(`/inventories/${inventoryId}/products`);
+        const itemsRes = await axios.get(
+          `/inventories/${inventoryId}/products`
+        );
         const items = itemsRes.data;
 
         // Step 3: Fetch full product details for each item
@@ -31,7 +33,10 @@ export default function BuyerInventory() {
                 product: productRes.data,
               };
             } catch (err) {
-              console.warn(`No se pudo obtener detalles del producto ${item.productId}`, err);
+              console.warn(
+                `No se pudo obtener detalles del producto ${item.productId}`,
+                err
+              );
               return {
                 ...item,
                 product: {
@@ -55,19 +60,39 @@ export default function BuyerInventory() {
   }, []);
 
   const handleRegisterUsage = async (item, amount) => {
+    if (amount <= 0) {
+      alert("Ingresa una cantidad válida.");
+      return;
+    }
+
+    if (amount > item.quantity) {
+      alert("No puedes registrar más unidades de las que tienes.");
+      return;
+    }
+
     try {
-      await axios.post("/usages/register", {
-        inventoryProductId: item.id,
-        quantityUsed: amount,
-      });
+      const inventoryId = (await axios.get("/inventories/current")).data.id;
+      const newQuantity = item.quantity - amount;
+
+      await axios.put(
+        `/inventories/${inventoryId}/products/${item.productId}`,
+        {
+          id: item.id,
+          quantity: newQuantity,
+          minimumStock: 0,
+          maximumStock: null,
+          unitPrice: null,
+          status: "ACTIVE", // Always send ACTIVE
+        }
+      );
 
       alert(`Uso registrado correctamente para ${item.productName}`);
 
       // Refresh inventory
-      const inventoryId = (await axios.get("/inventories/current")).data.id;
-      const items = (await axios.get(`/inventories/${inventoryId}/products`)).data;
+      const items = (await axios.get(`/inventories/${inventoryId}/products`))
+        .data;
 
-      const refreshedItems = await Promise.all(
+      const detailedItems = await Promise.all(
         items.map(async (item) => {
           try {
             const productRes = await axios.get(`/products/${item.productId}`);
@@ -88,7 +113,7 @@ export default function BuyerInventory() {
         })
       );
 
-      setInventoryItems(refreshedItems);
+      setInventoryItems(detailedItems);
     } catch (err) {
       console.error("Error al registrar uso:", err);
       alert("Hubo un error al registrar el uso.");
@@ -96,9 +121,8 @@ export default function BuyerInventory() {
   };
 
   const filteredAndSortedItems = inventoryItems
-    .filter(
-      (item) =>
-        item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter((item) =>
+      item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       switch (sortOption) {
