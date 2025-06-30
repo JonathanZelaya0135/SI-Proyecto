@@ -51,7 +51,7 @@ export default function TableOrder({ data, headers, onDelete }) {
                     onDelete(row.id);
                   }}
                   text={"Eliminar"}
-                  disabled={isDelivered} // disable if delivered
+                  disabled={isDelivered}
                 />
               </td>
             </tr>

@@ -13,17 +13,17 @@ export default function BuyerInventory() {
   useEffect(() => {
     const fetchInventoryAndProducts = async () => {
       try {
-        // Step 1: Get current inventory ID
+        // Fetch current inventory
         const inventoryRes = await axios.get("/inventories/current");
         const inventoryId = inventoryRes.data.id;
 
-        // Step 2: Get inventory products
+        // Fetch inventory items
         const itemsRes = await axios.get(
           `/inventories/${inventoryId}/products`
         );
         const items = itemsRes.data;
 
-        // Step 3: Fetch full product details for each item
+        // Fetch full product details for each item
         const detailedItems = await Promise.all(
           items.map(async (item) => {
             try {
@@ -82,13 +82,12 @@ export default function BuyerInventory() {
           minimumStock: 0,
           maximumStock: null,
           unitPrice: null,
-          status: "ACTIVE", // Always send ACTIVE
+          status: "ACTIVE",
         }
       );
 
       alert(`Uso registrado correctamente para ${item.productName}`);
 
-      // Refresh inventory
       const items = (await axios.get(`/inventories/${inventoryId}/products`))
         .data;
 

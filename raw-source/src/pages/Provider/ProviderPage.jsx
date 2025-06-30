@@ -122,7 +122,6 @@ export default function ProviderPage() {
       <div className="page-content">
         <MainTitle title={"Productos"} icon={"inventory"} />
 
-        {/* Search + Sort */}
         <div className="search-sort-container">
           <input
             type="text"
