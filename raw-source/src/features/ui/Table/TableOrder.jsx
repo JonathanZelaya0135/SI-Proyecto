@@ -10,6 +10,7 @@ export default function TableOrder({ data, headers, onDelete }) {
             {headers.map((header) => (
               <th key={header.key}>{header.label}</th>
             ))}
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -17,11 +18,13 @@ export default function TableOrder({ data, headers, onDelete }) {
             {headers.map((header) => (
               <td key={header.key}>--</td>
             ))}
+            <td>--</td>
           </tr>
         </tbody>
       </table>
     );
   }
+
   return (
     <table>
       <thead>
@@ -33,22 +36,27 @@ export default function TableOrder({ data, headers, onDelete }) {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => (
-          <tr key={index}>
-            {headers.map((header, cellIndex) => (
-              <td key={cellIndex}>{row[header.key]}</td>
-            ))}
-            <td className="button">
-              <DeleteButton
-                handleClick={() => {
-                  console.log("Deleted order with ID:", row.id);
-                  onDelete(row.id);
-                }}
-                text={"Eliminar"}
-              />
-            </td>
-          </tr>
-        ))}
+        {data.map((row, index) => {
+          const isDelivered = row.status === "DELIVERED";
+
+          return (
+            <tr key={index}>
+              {headers.map((header, cellIndex) => (
+                <td key={cellIndex}>{row[header.key]}</td>
+              ))}
+              <td className="button">
+                <DeleteButton
+                  handleClick={() => {
+                    console.log("Deleted order with ID:", row.id);
+                    onDelete(row.id);
+                  }}
+                  text={"Eliminar"}
+                  disabled={isDelivered} // disable if delivered
+                />
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );

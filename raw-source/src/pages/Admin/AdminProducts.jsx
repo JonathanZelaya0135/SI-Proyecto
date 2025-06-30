@@ -9,6 +9,7 @@ import ProductCardAdmin from "../../components/ProductCard/ProductCardAdmin";
 export default function AdminProducts() {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
+  const token = localStorage.getItem("token");
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
@@ -24,12 +25,8 @@ export default function AdminProducts() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      const token = localStorage.getItem("token");
-
       await instance.delete(`/products/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       fetchProducts();
     } catch (error) {

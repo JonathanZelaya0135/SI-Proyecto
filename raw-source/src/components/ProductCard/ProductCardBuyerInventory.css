@@ -40,6 +40,24 @@
   text-align: justify;
 }
 
+.product-right-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 90px;
+  align-items: flex-end;
+}
+
+.product-status {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.product-stock {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .product-actions {
   display: flex;
   flex-direction: column;
@@ -68,4 +86,24 @@
 
 .buy-button:hover {
   background-color: #96e600;
+}
+
+.stock-badge {
+  background-color: #ff4d4f;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  display: inline-block;
+  width: fit-content;
+  margin: 0 auto;
+  margin-bottom: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.grayed-out {
+  opacity: 0.5;
+  filter: grayscale(70%);
+  pointer-events: none;
 }
