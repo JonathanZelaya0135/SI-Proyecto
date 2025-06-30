@@ -11,37 +11,97 @@ export default function BuyerInventory() {
   const [sortOption, setSortOption] = useState("name-asc");
 
   useEffect(() => {
-    axios
-      .get("/inventories/current")
-      .then((res) => {
-        const data = res.data;
-        setInventoryItems(Array.isArray(data) ? data : []);
-      })
-      .catch((err) => {
-        console.error("Error fetching inventory:", err);
+    const fetchInventoryAndProducts = async () => {
+      try {
+        // Step 1: Get current inventory ID
+        const inventoryRes = await axios.get("/inventories/current");
+        const inventoryId = inventoryRes.data.id;
+
+        // Step 2: Get inventory products
+        const itemsRes = await axios.get(`/inventories/${inventoryId}/products`);
+        const items = itemsRes.data;
+
+        // Step 3: Fetch full product details for each item
+        const detailedItems = await Promise.all(
+          items.map(async (item) => {
+            try {
+              const productRes = await axios.get(`/products/${item.productId}`);
+              return {
+                ...item,
+                product: productRes.data,
+              };
+            } catch (err) {
+              console.warn(`No se pudo obtener detalles del producto ${item.productId}`, err);
+              return {
+                ...item,
+                product: {
+                  name: item.productName,
+                  description: "Sin descripción",
+                  image: "/images/placeholder-image.png",
+                },
+              };
+            }
+          })
+        );
+
+        setInventoryItems(detailedItems);
+      } catch (err) {
+        console.error("Error al obtener inventario:", err);
         setInventoryItems([]);
-      });
+      }
+    };
+
+    fetchInventoryAndProducts();
   }, []);
 
-  const handleRegisterUsage = (product, amount) => {
-    alert(`Registrando uso de ${amount} unidades para el producto: ${product.product.name}`);
-    // TODO: Implement POST to usage endpoint
+  const handleRegisterUsage = async (item, amount) => {
+    try {
+      await axios.post("/usages/register", {
+        inventoryProductId: item.id,
+        quantityUsed: amount,
+      });
+
+      alert(`Uso registrado correctamente para ${item.productName}`);
+
+      // Refresh inventory
+      const inventoryId = (await axios.get("/inventories/current")).data.id;
+      const items = (await axios.get(`/inventories/${inventoryId}/products`)).data;
+
+      const refreshedItems = await Promise.all(
+        items.map(async (item) => {
+          try {
+            const productRes = await axios.get(`/products/${item.productId}`);
+            return {
+              ...item,
+              product: productRes.data,
+            };
+          } catch {
+            return {
+              ...item,
+              product: {
+                name: item.productName,
+                description: "Sin descripción",
+                image: "/images/placeholder-image.png",
+              },
+            };
+          }
+        })
+      );
+
+      setInventoryItems(refreshedItems);
+    } catch (err) {
+      console.error("Error al registrar uso:", err);
+      alert("Hubo un error al registrar el uso.");
+    }
   };
 
   const filteredAndSortedItems = inventoryItems
     .filter(
       (item) =>
-        item.product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.product.description.toLowerCase().includes(searchTerm.toLowerCase())
+        item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
-      const getProvider = (item) => item.product.provider?.toLowerCase?.() ?? "";
-
       switch (sortOption) {
-        case "provider-asc":
-          return getProvider(a).localeCompare(getProvider(b));
-        case "provider-desc":
-          return getProvider(b).localeCompare(getProvider(a));
         case "name-desc":
           return b.product.name.localeCompare(a.product.name);
         case "name-asc":
@@ -70,8 +130,6 @@ export default function BuyerInventory() {
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
-            <option value="provider-asc">Proveedor (A-Z)</option>
-            <option value="provider-desc">Proveedor (Z-A)</option>
             <option value="name-asc">Nombre (A-Z)</option>
             <option value="name-desc">Nombre (Z-A)</option>
           </select>
@@ -81,8 +139,10 @@ export default function BuyerInventory() {
           {filteredAndSortedItems.map((item) => (
             <ProductCard
               key={item.id}
-              product={item.product}
-              onRegisterUsage={(product, amount) => handleRegisterUsage(item, amount)}
+              item={item}
+              onRegisterUsage={(item, amount) =>
+                handleRegisterUsage(item, amount)
+              }
             />
           ))}
         </div>
