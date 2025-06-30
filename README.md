@@ -1,5 +1,7 @@
 # RawSource - Sistema de Gestión de Materias Primas
 
+## Usuarios de prueba
+
 ### ADMIN
 Email: `john@mail.com`  
 Password: `123456`
