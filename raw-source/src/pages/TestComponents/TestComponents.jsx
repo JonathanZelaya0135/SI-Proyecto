@@ -6,14 +6,14 @@ import TableOrder from '../../features/ui/Table/TableOrder.jsx';
 import TableManage from '../../features/ui/Table/TableManage.jsx';
 
 export default function TestComponents() {
-    //Set values to see the behaviour of the cards
+    
     const [tableData, setTableData] = useState([]);
     const [userData] = useState(["Juan", "Pedro", "Maria", "Tahi"]);
     const [productData] = useState(["Perfume", "anillo", "camisa", "a", "b"]);
 
-    //Call the api (in this case using fake data to simulate behavior)
+    
     useEffect(() => {
-        // Simulate API call
+        
         setTimeout(() => {
             const fakeData = [
                 { orderNumber: '001', buyer: 'John', product: 'Laptop', quantity: 1 },
@@ -35,8 +35,7 @@ export default function TestComponents() {
         console.log('Deleted order number:', orderNumberToDelete);
     };
 
-    //Set custom headers since not sure yet on API response
-    //Replace key value with API json key value
+    
     const tableHeaders = [
         { label: "No. Pedido", key: "orderNumber" },
         { label: "Comprador", key: "buyer" },

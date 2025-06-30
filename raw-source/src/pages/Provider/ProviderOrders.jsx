@@ -28,7 +28,6 @@ export default function ProviderOrders() {
         status: order.status ?? "PENDING",
       }));
 
-      // Sort status Z–A
       const sorted = flattened.sort((a, b) => b.status.localeCompare(a.status));
 
       setTableData(sorted);

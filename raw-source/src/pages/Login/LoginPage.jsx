@@ -15,7 +15,7 @@ export default function LoginPage() {
     name: "",
     email: "",
     password: "",
-    role: "BUYER", // default role
+    role: "BUYER",
   });
 
   const navigate = useNavigate();

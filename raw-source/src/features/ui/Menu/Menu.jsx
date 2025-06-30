@@ -37,7 +37,6 @@ export default function AppMenu() {
     handleClickLogout: { icon: "logout" },
   };
 
-  // Determine which handlers to use for the menu
   const handlerKeys = {
     ADMIN: [
       "handleClickHomeAdmin",
@@ -85,7 +84,6 @@ export default function AppMenu() {
           <div>
             <p>{ name }</p>
             <p className="role">{ role }</p>
-            {/* Hacer nombre de usuario y rol dinamicos pls :) */}
           </div>
         </div>
         <TransparentIconButton handleClick={handlers.handleClickLogout} icon={"logout"}/>
