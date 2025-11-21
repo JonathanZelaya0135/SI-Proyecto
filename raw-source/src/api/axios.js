@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://rawsourceapi.up.railway.app/api',
+  baseURL: 'https://resourceapi-g59x.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
