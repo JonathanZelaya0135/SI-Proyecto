@@ -133,9 +133,13 @@ export default function BuyerInventory() {
       }
     });
 
+    const lowStockCount = inventoryItems.filter(i => i.quantity < 5).length;
+
   return (
     <div className="page-container">
-      <AppMenu />
+
+      <AppMenu lowStockCount={lowStockCount} />
+
       <div className="page-content">
         <MainTitle title={"Mi Inventario"} icon={"inventory"} />
 
