@@ -1,21 +1,22 @@
-import { useState } from "react";
-import TransparentIconButton from "../Button/TransparentButton";
-import "./Menu.css";
-import { useNavigate } from "react-router-dom";
-import { createHandlers } from "../../handlers/menuHandlers";
+import TransparentIconButton from '../Button/TransparentButton';
+import './Menu.css';
+import { useNavigate } from 'react-router-dom';
+import { createHandlers } from '../../handlers/menuHandlers';
 
-export default function AppMenu({ lowStockCount = 0 }) {
-  const [showNotifications, setShowNotifications] = useState(false);
+
+export default function AppMenu() {
+  
 
   const navigate = useNavigate();
-  const handlers = createHandlers(navigate);
+  const handlers= createHandlers(navigate);
 
+  
   const name = localStorage.getItem("username");
   const role = localStorage.getItem("role");
-  if (role == null) {
+  if(role == null){
     navigate("/login");
     return null;
-  }
+  };
 
   const iconMap = {
     handleClickHomeAdmin: { icon: "home", text: "Inicio" },
@@ -32,25 +33,33 @@ export default function AppMenu({ lowStockCount = 0 }) {
     handleClickOrdersBuyer: { icon: "list", text: "Mis ordenes" },
     handleClickOrdersProvider: { icon: "list", text: "Mis ordenes" },
 
+    handleClickTransactionsAdmin: { icon: "receipt_long", text: "Transacciones" },
+    handleClickTransactionsBuyer: { icon: "receipt_long", text: "Transacciones" },
+    handleClickTransactionsProvider: { icon: "receipt_long", text: "Transacciones" },
+
     handleClickProfile: { icon: "person" },
     handleClickLogout: { icon: "logout" },
   };
 
+  // Determine which handlers to use for the menu
   const handlerKeys = {
     ADMIN: [
       "handleClickHomeAdmin",
       "handleClickProductsAdmin",
       "handleClickUsersAdmin",
+      "handleClickTransactionsAdmin",
     ],
     BUYER: [
       "handleClickHomeBuyer",
       "handleClickInventoryBuyer",
       "handleClickOrdersBuyer",
+      "handleClickTransactionsBuyer",
     ],
     PROVIDER: [
       "handleClickHomeProvider",
-      "handleClickInventoryProvider",
+      "handleClickInventoryProvider", 
       "handleClickOrdersProvider",
+      "handleClickTransactionsProvider",
     ],
   };
 
@@ -64,39 +73,14 @@ export default function AppMenu({ lowStockCount = 0 }) {
     <div className="sidebar">
       <div className="sidebar-header">
         <h2 className="title">RawSource</h2>
-
-        <div className="notification-section">
-          <div
-            className="notification-button"
-            onClick={() => setShowNotifications(!showNotifications)}
-          >
-            <i className="material-icons">notifications</i>
-            {lowStockCount > 0 && (
-              <span className="notification-badge">{lowStockCount}</span>
-            )}
-          </div>
-
-          {showNotifications && (
-            <div className="notification-panel">
-              {lowStockCount === 0 ? (
-                <p>No hay alertas.</p>
-              ) : (
-                <p>Tienes {lowStockCount} productos con stock bajo.</p>
-              )}
-            </div>
-          )}
-        </div>
+        <TransparentIconButton icon={"menu"} />
       </div>
 
       <nav className="sidebar-nav">
         <ul>
           {menuItems.map((item, index) => (
             <li key={index}>
-              <TransparentIconButton
-                handleClick={item.onClick}
-                icon={item.icon}
-                text={item.text}
-              />
+              <TransparentIconButton handleClick={item.onClick} icon={item.icon} text={item.text} />
             </li>
           ))}
         </ul>
@@ -104,19 +88,14 @@ export default function AppMenu({ lowStockCount = 0 }) {
 
       <div className="sidebar-footer">
         <div className="user-info">
-          <TransparentIconButton
-            handleClick={handlers.handleClickProfile}
-            icon={"person"}
-          />
+          <TransparentIconButton handleClick={handlers.handleClickProfile} icon={"person"} />
           <div>
-            <p>{name}</p>
-            <p className="role">{role}</p>
+            <p>{ name }</p>
+            <p className="role">{ role }</p>
+            {/* Hacer nombre de usuario y rol dinamicos pls :) */}
           </div>
         </div>
-        <TransparentIconButton
-          handleClick={handlers.handleClickLogout}
-          icon={"logout"}
-        />
+        <TransparentIconButton handleClick={handlers.handleClickLogout} icon={"logout"}/>
       </div>
     </div>
   );
