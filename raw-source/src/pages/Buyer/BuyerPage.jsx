@@ -10,6 +10,7 @@ export default function BuyerPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
   const [quantities, setQuantities] = useState({});
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   const user = JSON.parse(localStorage.getItem("user"));
   const buyerId = user?.id;
@@ -92,6 +93,17 @@ export default function BuyerPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          
+          <select
+            className="category-dropdown"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">Todas las categorías</option>
+            <option value="categoría1">Categoría 1</option>
+            <option value="categoría2">Categoría 2</option>
+            <option value="categoría3">Categoría 3</option>
+          </select>
 
           <select
             className="sort-dropdown"

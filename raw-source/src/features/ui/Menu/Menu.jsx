@@ -72,7 +72,7 @@ export default function AppMenu({ lowStockCount = 0 }) {
           >
             <i className="material-icons">notifications</i>
             {lowStockCount > 0 && (
-              <span className="notification-badge">{lowStockCount}</span>
+              <span className="notification-badge">{1}</span>
             )}
           </div>
 

@@ -31,7 +31,7 @@
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   padding-bottom: 1rem;
-  position: relative; /* ADD THIS */
+  position: relative;
 }
 
 
@@ -103,6 +103,11 @@
   width: fit-content;
 }
 
+.notification-button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .notification-badge {
   position: absolute;
   top: -5px;
@@ -118,8 +123,8 @@
 .notification-panel {
   position: absolute;
   top: 100%;
-  right: 0;               /* Align to right side of sidebar */
-  width: 200px;           /* Fits comfortably inside sidebar */
+  right: 0;
+  width: 200px;
   
   background: white;
   color: black;

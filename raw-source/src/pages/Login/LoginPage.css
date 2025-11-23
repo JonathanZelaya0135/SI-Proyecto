@@ -5,31 +5,16 @@
   justify-content: center;
   height: 100vh;
   gap: 1rem;
+  padding: 2rem;
+  box-sizing: border-box;
   font-family: sans-serif;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  margin: 16px;
-}
-
-.input-group label {
-  font-weight: bold;
-}
-
-.input-group input {
-  padding: 0.5rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
 }
 
 .register-link {
   font-size: 0.85rem;
   color: #555;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .register-link:hover {
@@ -38,16 +23,34 @@
 }
 
 .login-button {
-  padding: 0.5rem 1rem;
-  width: 200px;
+  padding: 0.75rem;
+  width: 280px;
   background-color: #ff9900;
   color: white;
+  font-size: 1rem;
+  font-weight: bold;
   border: none;
   border-radius: 32px;
   cursor: pointer;
-  margin-top: 0;
+  margin-top: 0.5rem;
+  transition: background 0.2s ease;
 }
 
 .login-button:hover {
   background-color: #96e600;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  gap: 1rem;
+}
+
+.login-container form input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
