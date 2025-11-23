@@ -23,7 +23,7 @@ function App() {
         <Route path="/buyer" element={<BuyerPage />} />
         <Route path="/buyer/inventory" element={<BuyerInventory />} />
         <Route path="/buyer/orders" element={<BuyerOrders />} />
-        <Route path="/buyer/transactions" element={<Transactions />} />
+        <Route path="/transactions/:productId?" element={<Transactions />} />
         <Route path="/provider" element={<ProviderPage />} />
         <Route path="/provider/orders" element={<ProviderOrders />} />
         <Route path="/profile" element={<ProfilePage />} />

@@ -33,10 +33,6 @@ export default function AppMenu() {
     handleClickOrdersBuyer: { icon: "list", text: "Mis ordenes" },
     handleClickOrdersProvider: { icon: "list", text: "Mis ordenes" },
 
-    handleClickTransactionsAdmin: { icon: "receipt_long", text: "Transacciones" },
-    handleClickTransactionsBuyer: { icon: "receipt_long", text: "Transacciones" },
-    handleClickTransactionsProvider: { icon: "receipt_long", text: "Transacciones" },
-
     handleClickProfile: { icon: "person" },
     handleClickLogout: { icon: "logout" },
   };
@@ -47,19 +43,16 @@ export default function AppMenu() {
       "handleClickHomeAdmin",
       "handleClickProductsAdmin",
       "handleClickUsersAdmin",
-      "handleClickTransactionsAdmin",
     ],
     BUYER: [
       "handleClickHomeBuyer",
       "handleClickInventoryBuyer",
       "handleClickOrdersBuyer",
-      "handleClickTransactionsBuyer",
     ],
     PROVIDER: [
       "handleClickHomeProvider",
       "handleClickInventoryProvider", 
       "handleClickOrdersProvider",
-      "handleClickTransactionsProvider",
     ],
   };
 

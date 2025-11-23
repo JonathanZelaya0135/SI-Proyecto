@@ -1,12 +1,20 @@
 import { useState } from "react";
 import "./ProductCardBuyerInventory.css";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
   const { productName, quantity, product } = item;
   const [showInput, setShowInput] = useState(false);
   const [usageAmount, setUsageAmount] = useState(0);
+  const navigate = useNavigate();
 
-  const handleRegister = () => {
+  const productId = product?.id ?? item.productId ?? item.id;
+
+  const handleRegister = (e) => {
+    // prevent card click navigation when confirming
+    if (e && e.stopPropagation) e.stopPropagation();
+
     if (usageAmount > 0 && usageAmount <= quantity) {
       onRegisterUsage(item, usageAmount);
       setUsageAmount(0);
@@ -15,9 +23,17 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
       alert("Cantidad inválida.");
     }
   };
+  const handleCardClick = () => {
+    if (!productId) return;
+    navigate(`/transactions/${productId}`);
+  };
 
   return (
-    <div className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}>
+    <div
+      className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}
+      onClick={handleCardClick}
+      style={{ cursor: "pointer" }}
+    >
       <img
         src={product?.image || "/images/placeholder-image.png"}
         alt={productName}
@@ -41,7 +57,10 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
             {!showInput ? (
               <button
                 className="buy-button"
-                onClick={() => setShowInput(true)}
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent navigation
+                  setShowInput(true);
+                }}
                 disabled={quantity === 0}
               >
                 Registrar uso
@@ -53,7 +72,10 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
                   min="1"
                   max={quantity}
                   value={usageAmount}
-                  onChange={(e) => setUsageAmount(parseInt(e.target.value))}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) =>
+                    setUsageAmount(parseInt(e.target.value, 10) || 0)
+                  }
                   className="quantity-dropdown"
                 />
                 <button className="buy-button" onClick={handleRegister}>

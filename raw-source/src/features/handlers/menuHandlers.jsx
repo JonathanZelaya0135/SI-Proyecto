@@ -10,9 +10,6 @@ export const createHandlers = (navigate) => ({
   handleClickUsersAdmin: () => navigate("/admin/users"),
   handleClickProductsAdmin: () => navigate("/admin/products"),
 
-  handleClickTransactionsAdmin: () => navigate("/admin/transactions"),
-  handleClickTransactionsBuyer: () => navigate("/buyer/transactions"),
-  handleClickTransactionsProvider: () => navigate("/provider/transactions"),
 
 
   handleClickOrdersProvider: () => navigate("/provider/orders"),

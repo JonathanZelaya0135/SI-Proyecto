@@ -15,7 +15,8 @@ export default function ProfilePage(){
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
-        role: ''
+        role: '',
+        notification: ''
     });
 
     const fetchUser = async() => {
@@ -53,6 +54,13 @@ export default function ProfilePage(){
             console.error('Failed to update user password:', err);
         }
     };
+
+    function handleNotificationToggle() {
+        setUserInfo(prevState => ({
+            ...prevState,
+            notification: !prevState.notification
+        }));
+    }
 
     return (
         <div className="page-container">
