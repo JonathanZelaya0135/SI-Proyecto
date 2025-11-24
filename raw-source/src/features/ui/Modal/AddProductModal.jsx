@@ -34,9 +34,12 @@ export default function AddProductModal({
             <option value="" disabled>
               Seleccionar categoría...
             </option>
-            <option value="placeholder1">Categoría 1</option>
-            <option value="placeholder2">Categoría 2</option>
-            <option value="placeholder3">Categoría 3</option>
+            <option value="Agujas">Agujas</option>
+            <option value="Botones">Botones</option>
+            <option value="Broches">Broches</option>
+            <option value="Hilos">Hilos</option>
+            <option value="Telas">Telas</option>
+            <option value="Zippers">Zippers</option>
           </select>
           <input
             type="text"

@@ -170,9 +170,12 @@ export default function BuyerInventory() {
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
             <option value="">Todas las categorías</option>
-            <option value="categoría1">Categoría 1</option>
-            <option value="categoría2">Categoría 2</option>
-            <option value="categoría3">Categoría 3</option>
+            <option value="Agujas">Agujas</option>
+            <option value="Botones">Botones</option>
+            <option value="Broches">Broches</option>
+            <option value="Hilos">Hilos</option>
+            <option value="Telas">Telas</option>
+            <option value="Zippers">Zippers</option>
           </select>
 
           <select
