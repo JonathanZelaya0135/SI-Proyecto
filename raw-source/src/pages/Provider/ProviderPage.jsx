@@ -110,6 +110,13 @@ export default function ProviderPage() {
       }
     });
 
+  // navigate to transactions page for a product
+  const handleCardClick = (product) => {
+    const name = product?.name;
+    if (!name) return;
+    navigate(`/transactions/${name}`);
+  };
+
   return (
     <div className="page-container">
       {showModal && (
@@ -161,13 +168,18 @@ export default function ProviderPage() {
           <MainButton text={"Agregar Producto +"} handleClick={handleOpenModal} />
         </div>
 
-        <div className="cards-container">
+        <div className="product-grid">
           {filteredProducts.map(product => (
-            <ProductCardAdmin
-              key={product.id}
-              product={product}
-              onDelete={handleDeleteProduct}
-            />
+            <div
+              key={product.id ?? product._id ?? product.productId}
+              onClick={() => handleCardClick(product)}
+              style={{ cursor: "pointer" }}
+            >
+              <ProductCardAdmin
+                product={product}
+                onDelete={handleDeleteProduct}
+              />
+            </div>
           ))}
         </div>
       </div>

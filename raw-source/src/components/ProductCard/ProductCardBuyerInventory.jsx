@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "./ProductCardBuyerInventory.css";
 
-export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
+export default function ProductCardBuyerInventory({ item, onRegisterUsage, onClick }) {
   const { productName, quantity, product } = item;
   const [showInput, setShowInput] = useState(false);
   const [usageAmount, setUsageAmount] = useState(0);
 
-  const handleRegister = () => {
+  const handleRegister = (e) => {
+    // prevent card click navigation when confirming
+
     if (usageAmount > 0 && usageAmount <= quantity) {
       onRegisterUsage(item, usageAmount);
       setUsageAmount(0);
@@ -16,8 +18,13 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
     }
   };
 
+  // no internal navigation here — parent controls navigation
   return (
-    <div className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}>
+    <div
+      className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}
+      onClick={onClick}
+      style={{ cursor: onClick ? "pointer" : "default" }}
+    >
       <img
         src={product?.image || "/images/placeholder-image.png"}
         alt={productName}
@@ -25,9 +32,7 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
       />
       <h3 className="product-name">{productName}</h3>
 
-      {quantity === 0 && (
-        <span className="stock-badge">¡Sin stock!</span>
-      )}
+      {quantity === 0 && <span className="stock-badge">¡Sin stock!</span>}
 
       <div className="product-details">
         <p className="product-description">
@@ -41,7 +46,11 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
             {!showInput ? (
               <button
                 className="buy-button"
-                onClick={() => setShowInput(true)}
+                onClick={(e) => {
+                  // prevent card click navigation when opening input
+                  e.stopPropagation();
+                  setShowInput(true);
+                }}
                 disabled={quantity === 0}
               >
                 Registrar uso
@@ -53,7 +62,10 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
                   min="1"
                   max={quantity}
                   value={usageAmount}
-                  onChange={(e) => setUsageAmount(parseInt(e.target.value))}
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) =>
+                    setUsageAmount(parseInt(e.target.value, 10) || 0)
+                  }
                   className="quantity-dropdown"
                 />
                 <button className="buy-button" onClick={handleRegister}>

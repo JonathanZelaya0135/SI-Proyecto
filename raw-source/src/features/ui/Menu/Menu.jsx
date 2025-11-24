@@ -1,21 +1,22 @@
-import { useState } from "react";
-import TransparentIconButton from "../Button/TransparentButton";
-import "./Menu.css";
-import { useNavigate } from "react-router-dom";
-import { createHandlers } from "../../handlers/menuHandlers";
+import TransparentIconButton from '../Button/TransparentButton';
+import './Menu.css';
+import { useNavigate } from 'react-router-dom';
+import { createHandlers } from '../../handlers/menuHandlers';
 
-export default function AppMenu({ lowStockCount = 0 }) {
-  const [showNotifications, setShowNotifications] = useState(false);
+
+export default function AppMenu() {
+  
 
   const navigate = useNavigate();
-  const handlers = createHandlers(navigate);
+  const handlers= createHandlers(navigate);
 
+  
   const name = localStorage.getItem("username");
   const role = localStorage.getItem("role");
-  if (role == null) {
+  if(role == null){
     navigate("/login");
     return null;
-  }
+  };
 
   const iconMap = {
     handleClickHomeAdmin: { icon: "home", text: "Inicio" },
@@ -36,6 +37,7 @@ export default function AppMenu({ lowStockCount = 0 }) {
     handleClickLogout: { icon: "logout" },
   };
 
+  // Determine which handlers to use for the menu
   const handlerKeys = {
     ADMIN: [
       "handleClickHomeAdmin",
@@ -49,7 +51,7 @@ export default function AppMenu({ lowStockCount = 0 }) {
     ],
     PROVIDER: [
       "handleClickHomeProvider",
-      "handleClickInventoryProvider",
+      "handleClickInventoryProvider", 
       "handleClickOrdersProvider",
     ],
   };
@@ -86,17 +88,14 @@ export default function AppMenu({ lowStockCount = 0 }) {
             </div>
           )}
         </div>
+
       </div>
 
       <nav className="sidebar-nav">
         <ul>
           {menuItems.map((item, index) => (
             <li key={index}>
-              <TransparentIconButton
-                handleClick={item.onClick}
-                icon={item.icon}
-                text={item.text}
-              />
+              <TransparentIconButton handleClick={item.onClick} icon={item.icon} text={item.text} />
             </li>
           ))}
         </ul>
@@ -104,19 +103,14 @@ export default function AppMenu({ lowStockCount = 0 }) {
 
       <div className="sidebar-footer">
         <div className="user-info">
-          <TransparentIconButton
-            handleClick={handlers.handleClickProfile}
-            icon={"person"}
-          />
+          <TransparentIconButton handleClick={handlers.handleClickProfile} icon={"person"} />
           <div>
-            <p>{name}</p>
-            <p className="role">{role}</p>
+            <p>{ name }</p>
+            <p className="role">{ role }</p>
+            {/* Hacer nombre de usuario y rol dinamicos pls :) */}
           </div>
         </div>
-        <TransparentIconButton
-          handleClick={handlers.handleClickLogout}
-          icon={"logout"}
-        />
+        <TransparentIconButton handleClick={handlers.handleClickLogout} icon={"logout"}/>
       </div>
     </div>
   );
