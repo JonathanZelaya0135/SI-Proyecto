@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     width: 50%;
-    margin: 1rem auto ;
+    margin: 0.5rem auto ;
     background-color: white;
     border: 1px solid #f26e21;
     border-radius: 30px;
@@ -47,4 +47,21 @@
 
 .change-password button:hover {
   background-color: #fabc60;
+}
+
+.notifications{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    margin-top: 1rem;
+    background-color: white;
+    border: 1px solid #f26e21;
+    border-radius: 30px;
+    padding: 16px 0px;
+    align-items: center;
+}
+
+.notifications h3{
+    text-align: center;
+    font-size: 2rem;
 }

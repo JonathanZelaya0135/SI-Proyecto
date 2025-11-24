@@ -9,6 +9,7 @@ import BuyerOrders from './pages/Buyer/BuyerOrders';
 import ProviderPage from './pages/Provider/ProviderPage';
 import ProviderOrders from './pages/Provider/ProviderOrders';
 import ProfilePage from './pages/Profile/Profile';
+import Transactions from './pages/Transactions/Transactions';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/buyer" element={<BuyerPage />} />
         <Route path="/buyer/inventory" element={<BuyerInventory />} />
         <Route path="/buyer/orders" element={<BuyerOrders />} />
+        <Route path="/transactions/:productName" element={<Transactions />} />
         <Route path="/provider" element={<ProviderPage />} />
         <Route path="/provider/orders" element={<ProviderOrders />} />
         <Route path="/profile" element={<ProfilePage />} />
