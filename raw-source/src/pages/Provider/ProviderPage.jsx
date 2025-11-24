@@ -23,6 +23,7 @@ export default function ProviderPage() {
 
   const [newProducts, setNewProducts] = useState({
     name: '',
+    category: '',
     description: '',
     price: '',
     image: '',
@@ -82,6 +83,7 @@ export default function ProviderPage() {
       setShowModal(false);
       setNewProducts({
         name: '',
+        category: '',
         description: '',
         price: '',
         image: '',
@@ -89,7 +91,7 @@ export default function ProviderPage() {
         providerName
       });
     } catch (err) {
-      console.error('Failed to register user:', err);
+      console.error('Failed to register product:', err);
     }
   };
 
