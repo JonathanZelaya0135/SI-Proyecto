@@ -16,18 +16,22 @@ export default function ProfilePage(){
         name: '',
         email: '',
         role: '',
-        notification: ''
+        notification: false // keep boolean (controlled)
     });
 
     const fetchUser = async() => {
-        instance.get(`/users/${myId}`)
-      .then((res) => {
-        const user = res.data;
-        setUserInfo(user); 
-      })
-      .catch((err) => {
-        console.error('Error fetching user:', err);
-      });
+        try {
+            const res = await instance.get(`/users/${myId}`);
+            const user = res.data || {};
+            setUserInfo({
+                name: user.name ?? '',
+                email: user.email ?? '',
+                role: user.role ?? '',
+                notification: !!user.notification
+            });
+        } catch (err) {
+            console.error('Error fetching user:', err);
+        }
     }
 
     useEffect(() => {
@@ -88,6 +92,17 @@ export default function ProfilePage(){
                         {showMessage && <p className="error-message">Las contraseñas son diferentes</p>}
                         <button type="submit">Cambiar contraseña</button>
                     </form>
+                </div>
+                <div className="notifications">
+                    <h3>Notificaciones</h3>
+                    <p>{userInfo.notification ? "Las notificaciones están activadas" : "Las notificaciones están desactivadas"}</p>
+                    <div className="toggle">
+                        <label className="switch">
+                            <input type="checkbox" onChange={handleNotificationToggle} checked={userInfo.notification}/>
+                            <span className="slider"></span>
+                            Recibir notificaciones
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,19 +1,13 @@
 import { useState } from "react";
 import "./ProductCardBuyerInventory.css";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
-export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
+export default function ProductCardBuyerInventory({ item, onRegisterUsage, onClick }) {
   const { productName, quantity, product } = item;
   const [showInput, setShowInput] = useState(false);
   const [usageAmount, setUsageAmount] = useState(0);
-  const navigate = useNavigate();
-
-  const productId = product?.id ?? item.productId ?? item.id;
 
   const handleRegister = (e) => {
     // prevent card click navigation when confirming
-    if (e && e.stopPropagation) e.stopPropagation();
 
     if (usageAmount > 0 && usageAmount <= quantity) {
       onRegisterUsage(item, usageAmount);
@@ -23,16 +17,13 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
       alert("Cantidad inválida.");
     }
   };
-  const handleCardClick = () => {
-    if (!productId) return;
-    navigate(`/transactions/${productId}`);
-  };
 
+  // no internal navigation here — parent controls navigation
   return (
     <div
       className={`product-card ${quantity === 0 ? "grayed-out" : ""}`}
-      onClick={handleCardClick}
-      style={{ cursor: "pointer" }}
+      onClick={onClick}
+      style={{ cursor: onClick ? "pointer" : "default" }}
     >
       <img
         src={product?.image || "/images/placeholder-image.png"}
@@ -41,9 +32,7 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
       />
       <h3 className="product-name">{productName}</h3>
 
-      {quantity === 0 && (
-        <span className="stock-badge">¡Sin stock!</span>
-      )}
+      {quantity === 0 && <span className="stock-badge">¡Sin stock!</span>}
 
       <div className="product-details">
         <p className="product-description">
@@ -58,7 +47,8 @@ export default function ProductCardBuyerInventory({ item, onRegisterUsage }) {
               <button
                 className="buy-button"
                 onClick={(e) => {
-                  e.stopPropagation(); // prevent navigation
+                  // prevent card click navigation when opening input
+                  e.stopPropagation();
                   setShowInput(true);
                 }}
                 disabled={quantity === 0}

@@ -109,9 +109,9 @@ export default function ProviderPage() {
 
   // navigate to transactions page for a product
   const handleCardClick = (product) => {
-    const id = product?.id ?? product?._id ?? product?.productId;
-    if (!id) return;
-    navigate(`/transactions/${id}`);
+    const name = product?.name;
+    if (!name) return;
+    navigate(`/transactions/${name}`);
   };
 
   return (
@@ -151,7 +151,7 @@ export default function ProviderPage() {
           <MainButton text={"Agregar Producto +"} handleClick={handleOpenModal} />
         </div>
 
-        <div className="cards-container">
+        <div className="product-grid">
           {filteredProducts.map(product => (
             <div
               key={product.id ?? product._id ?? product.productId}

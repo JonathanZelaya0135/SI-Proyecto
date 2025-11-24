@@ -6,51 +6,52 @@ import { useParams } from "react-router-dom";
 import instance from "../../api/axios";
 
 export default function Transactions() {
-  const { productId } = useParams();
+  const { productName } = useParams();
   const [tableData, setTableData] = useState([]);
+  const role = localStorage.getItem("role");
+  const apiRoute = role === "BUYER"
+    ? "/orders"
+    : "orders/provider/myorders";
 
   const tableHeaders = [
     { label: "No. Producto", key: "id" },
     { label: "Nombre del Producto", key: "productName" },
+    {label: "Fecha", key: "date" },
     { label: "Cantidad", key: "quantity" },
     { label: "Precio ($)", key: "price" },
-    { label: "Indicador de Stock", key: "stock" },
+    { label: "+/-", key: "type" },
   ];
 
   useEffect(() => {
-    if (!productId) return;
 
     const fetchTransactions = async () => {
       try {
-        // use the endpoint specified: /transactions/${productId}
-        const res = await instance.get(`/transactions/${productId}`);
+        const res = await instance.get(apiRoute);
         let data = res.data;
 
-        // Normalize different possible response shapes into an array
-        if (!Array.isArray(data)) {
-          if (Array.isArray(data.transactions)) data = data.transactions;
-          else if (Array.isArray(res.data.orders)) data = res.data.orders;
-          else if (Array.isArray(res.data)) data = res.data;
-          else data = [];
-        }
-
         const flattened = data.map((entry) => ({
-          id: entry.items?.[0]?.productId ?? entry.productId ?? entry.id ?? "--",
+          id: entry.items?.[0]?.productId ?? entry.productId ?? entry.id,
           productName:
-            entry.items?.[0]?.productName ?? entry.productName ?? entry.name ?? "--",
+            entry.items?.[0]?.productName ?? "--",
+          date: entry.date ?? entry.createdAt ?? "--",
           quantity: entry.items?.[0]?.quantity ?? entry.quantity ?? "--",
           price: entry.items?.[0]?.price ?? entry.price ?? "--",
-          stock: entry.stock ?? entry.stockIndicator ?? "--",
+          type: entry.type ?? "--"
         }));
 
-        setTableData(flattened);
+
+        const filtered = flattened.filter(
+          (row) => row.productName === productName
+        );
+
+        setTableData(filtered);
       } catch (err) {
-        console.error("Error fetching transactions for product", productId, err);
+        console.error("Error fetching transactions for product", productName, err, apiRoute);
       }
     };
 
     fetchTransactions();
-  }, [productId]);
+  }, [productName]);
 
   return (
     <div className="page-container">

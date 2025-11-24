@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "../../api/axios";
 import AppMenu from "../../features/ui/Menu/Menu";
 import ProductCard from "../../components/ProductCard/ProductCardBuyerInventory";
@@ -9,6 +10,7 @@ export default function BuyerInventory() {
   const [inventoryItems, setInventoryItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInventoryAndProducts = async () => {
@@ -135,6 +137,15 @@ export default function BuyerInventory() {
 
     const lowStockCount = inventoryItems.filter(i => i.quantity < 5).length;
 
+    const handleCardClick = (product) => {
+      const name =
+        product?.name ??
+        product?.productName ??
+        product?.product_name;
+      if (!name) return;
+      navigate(`/transactions/${encodeURIComponent(name)}`);
+    };
+
   return (
     <div className="page-container">
 
@@ -164,13 +175,18 @@ export default function BuyerInventory() {
 
         <div className="product-grid">
           {filteredAndSortedItems.map((item) => (
-            <ProductCard
+            <div className="card-container"
               key={item.id}
-              item={item}
-              onRegisterUsage={(item, amount) =>
-                handleRegisterUsage(item, amount)
-              }
-            />
+              onClick={() => handleCardClick(item.product ?? item)}
+              style={{ cursor: "pointer" }}
+            >
+              <ProductCard
+                item={item}
+                onRegisterUsage={(item, amount) =>
+                  handleRegisterUsage(item, amount)
+                }
+              />
+            </div>
           ))}
         </div>
       </div>
