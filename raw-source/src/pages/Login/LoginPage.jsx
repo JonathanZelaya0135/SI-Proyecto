@@ -20,7 +20,8 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
       const response = await axios.post("/auth/login", { email, password });
       const { token, user } = response.data;
@@ -69,28 +70,32 @@ export default function LoginPage() {
   return (
     <div className="login-container">
       <LoginTitle title={"RawSource"} />
-      <Input
-        type={"text"}
-        placeholder={"Email"}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <Input
-        type={"password"}
-        placeholder={"Password"}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <form onSubmit={handleLogin}>
+        <Input
+          type="text"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        <Input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <p className="register-link" onClick={() => setShowRegister(true)}>
-        ¿No tienes cuenta? Registrarse
-      </p>
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
-      <button className="login-button" onClick={handleLogin}>
-        INICIAR SESIÓN
-      </button>
+        <p className="register-link" onClick={() => setShowRegister(true)}>
+          ¿No tienes cuenta? Registrarse
+        </p>
+
+      
+        <button className="login-button" type="submit">
+          INICIAR SESIÓN
+        </button>
+      </form>
 
       {showRegister && (
         <RegisterUserModal

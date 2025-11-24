@@ -11,6 +11,7 @@ export default function BuyerInventory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
   const navigate = useNavigate();
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   useEffect(() => {
     const fetchInventoryAndProducts = async () => {
@@ -162,12 +163,25 @@ export default function BuyerInventory() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          
+          <select
+            className="category-dropdown"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">Todas las categorías</option>
+            <option value="categoría1">Categoría 1</option>
+            <option value="categoría2">Categoría 2</option>
+            <option value="categoría3">Categoría 3</option>
+          </select>
 
           <select
             className="sort-dropdown"
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
+            <option value="provider-asc">Proveedor (A-Z)</option>
+            <option value="provider-desc">Proveedor (Z-A)</option>
             <option value="name-asc">Nombre (A-Z)</option>
             <option value="name-desc">Nombre (Z-A)</option>
           </select>

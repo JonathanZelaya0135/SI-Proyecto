@@ -1,10 +1,10 @@
 import AppMenu from "../../features/ui/Menu/Menu";
 import MainTitle from "../../features/ui/Title/MainTitle";
-import "./AdminPage.css";
 import { useState, useEffect } from "react";
 import instance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import ProductCardAdmin from "../../components/ProductCard/ProductCardAdmin";
+import "./AdminPage.css";
 
 export default function AdminProducts() {
   const navigate = useNavigate();
@@ -13,6 +13,7 @@ export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
+  const [categoryFilter, setCategoryFilter] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -80,6 +81,17 @@ export default function AdminProducts() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+          
+          <select
+            className="category-dropdown"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">Todas las categorías</option>
+            <option value="categoría1">Categoría 1</option>
+            <option value="categoría2">Categoría 2</option>
+            <option value="categoría3">Categoría 3</option>
+          </select>
 
           <select
             className="sort-dropdown"

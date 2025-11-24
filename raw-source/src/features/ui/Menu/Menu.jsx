@@ -66,7 +66,29 @@ export default function AppMenu() {
     <div className="sidebar">
       <div className="sidebar-header">
         <h2 className="title">RawSource</h2>
-        <TransparentIconButton icon={"menu"} />
+
+        <div className="notification-section">
+          <div
+            className="notification-button"
+            onClick={() => setShowNotifications(!showNotifications)}
+          >
+            <i className="material-icons">notifications</i>
+            {lowStockCount > 0 && (
+              <span className="notification-badge">{1}</span>
+            )}
+          </div>
+
+          {showNotifications && (
+            <div className="notification-panel">
+              {lowStockCount === 0 ? (
+                <p>No hay alertas.</p>
+              ) : (
+                <p>Tienes {lowStockCount} productos con stock bajo.</p>
+              )}
+            </div>
+          )}
+        </div>
+
       </div>
 
       <nav className="sidebar-nav">
