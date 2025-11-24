@@ -5,6 +5,7 @@ import MainButton from "../../features/ui/Button/MainButton";
 import { useState, useEffect } from 'react';
 import instance from "../../api/axios";
 import AddUserModal from "../../features/ui/Modal/AddUserModal";
+import RoleDropdown from "../../features/ui/Input/RoleDropdown";
 
 export default function AdminUsers(){
     const [tableData, setTableData] = useState([]);
@@ -20,9 +21,13 @@ export default function AdminUsers(){
         { label: "Correo", key: "email" },
         { label: "Rol", key: "role" },
     ];
-    const fetchUsers = async () => {
+    const [selectedRole, setSelectedRole] = useState('');
+
+    const fetchUsers = async (role = selectedRole) => {
       try {
-        const res = await instance.get('/users');
+        const params = {};
+        if (role && role !== '') params.role = role;
+        const res = await instance.get('/users', { params });
         setTableData(res.data);
       } catch (err) {
         console.error('Error fetching users:', err);
@@ -32,6 +37,12 @@ export default function AdminUsers(){
   useEffect(() => {
       fetchUsers();      
   }, []);
+
+  const handleRoleChange = (e) => {
+    const { value } = e.target;
+    setSelectedRole(value);
+    fetchUsers(value);
+  };
 
   const [showModal, setShowModal] = useState(false);
 
@@ -75,7 +86,8 @@ const handleDeleteUser = async (userId) => {
                 <AppMenu />
             <div className="page-content">
                 <MainTitle title={"Usuarios"} icon={"groups"}/>
-                <div style={{display: "flex", justifyContent: "flex-end", marginRight:"2rem"}}>
+                <div style={{display: "flex", justifyContent: "flex-end", marginRight:"2rem", alignItems: 'center'}}>
+                  <RoleDropdown value={selectedRole} onChange={handleRoleChange} />
                   <MainButton text={"Agregar Usuario +"} handleClick={handleOpenModal}/>
                 </div>
                 <div className="table-container">

@@ -1,0 +1,15 @@
+.role-dropdown{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  margin-right:1rem;
+}
+.role-label{
+  font-weight:600;
+}
+select#role-select{
+  padding:0.35rem 0.5rem;
+  border-radius:6px;
+  border:1px solid #ccc;
+  background:#fff;
+}
