@@ -2,6 +2,7 @@ import AppMenu from "../../features/ui/Menu/Menu";
 import MainTitle from "../../features/ui/Title/MainTitle";
 import MainButton from "../../features/ui/Button/MainButton";
 import AddProductModal from "../../features/ui/Modal/AddProductModal";
+import AdvancedFilter from "../../features/ui/Advanced_Filter/AdvancedFilter";
 import { useState, useEffect } from 'react';
 import instance from "../../api/axios";
 import { useNavigate } from 'react-router-dom';
@@ -16,10 +17,18 @@ export default function ProviderPage() {
   const providerName = localStorage.getItem("username");
 
   const [showModal, setShowModal] = useState(false);
+  const [showAdvancedFilter, setShowAdvancedFilter] = useState(false);
+
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
-  const [categoryFilter, setCategoryFilter] = useState("");
+
+  const [advancedFilters, setAdvancedFilters] = useState({
+    category: "",
+    price: ""
+  });
 
   const [newProducts, setNewProducts] = useState({
     name: '',
@@ -35,6 +44,7 @@ export default function ProviderPage() {
     try {
       const res = await instance.get(`/products/provider/${providerId}`);
       setProducts(res.data);
+      setFilteredProducts(res.data);
     } catch (err) {
       console.error('Error fetching products:', err);
     }
@@ -95,7 +105,25 @@ export default function ProviderPage() {
     }
   };
 
-  const filteredProducts = products
+  // APPLY ADVANCED FILTERS
+  const applyAdvancedFilters = (filters) => {
+    setAdvancedFilters(filters);
+
+    let updated = [...products];
+
+    if (filters.category) {
+      updated = updated.filter(p => p.category === filters.category);
+    }
+
+    if (filters.price !== "") {
+      updated = updated.filter(p => p.price === Number(filters.price));
+    }
+
+    setFilteredProducts(updated);
+  };
+
+  // SEARCH + SORT APPLIED ON TOP OF ADV FILTER RESULTS
+  const finalProducts = filteredProducts
     .filter((p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -112,12 +140,22 @@ export default function ProviderPage() {
 
   return (
     <div className="page-container">
+
+      {/* ADD PRODUCT MODAL */}
       {showModal && (
         <AddProductModal
           product={newProducts}
           handleChange={handleChange}
           handleCloseModal={handleCloseModal}
           handleAddProduct={handleAddProduct}
+        />
+      )}
+
+      {/* ADVANCED FILTER MODAL */}
+      {showAdvancedFilter && (
+        <AdvancedFilter
+          onApplyFilters={applyAdvancedFilters}
+          onClose={() => setShowAdvancedFilter(false)}
         />
       )}
 
@@ -133,25 +171,19 @@ export default function ProviderPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
-          
-          <select
-            className="category-dropdown"
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
+
+          <button
+            className="filter-button"
+            onClick={() => setShowAdvancedFilter(true)}
           >
-            <option value="">Todas las categorías</option>
-            <option value="categoría1">Categoría 1</option>
-            <option value="categoría2">Categoría 2</option>
-            <option value="categoría3">Categoría 3</option>
-          </select>
+            Filtro Avanzado
+          </button>
 
           <select
             className="sort-dropdown"
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
-            <option value="provider-asc">Proveedor (A-Z)</option>
-            <option value="provider-desc">Proveedor (Z-A)</option>
             <option value="name-asc">Nombre (A-Z)</option>
             <option value="name-desc">Nombre (Z-A)</option>
           </select>
@@ -162,7 +194,7 @@ export default function ProviderPage() {
         </div>
 
         <div className="cards-container">
-          {filteredProducts.map(product => (
+          {finalProducts.map(product => (
             <ProductCardAdmin
               key={product.id}
               product={product}
