@@ -107,20 +107,22 @@ export default function ProviderPage() {
 
   // APPLY ADVANCED FILTERS
   const applyAdvancedFilters = (filters) => {
-    setAdvancedFilters(filters);
+  setAdvancedFilters(filters);
 
-    let updated = [...products];
+  let updated = [...products];
 
-    if (filters.category) {
-      updated = updated.filter(p => p.category === filters.category);
-    }
+  // CATEGORY filter (optional)
+  if (filters.category !== "") {
+    updated = updated.filter(p => p.category === filters.category);
+  }
 
-    if (filters.price !== "") {
-      updated = updated.filter(p => p.price === Number(filters.price));
-    }
+  // PRICE filter (optional)
+  if (filters.price !== "") {
+    updated = updated.filter(p => p.price === Number(filters.price));
+  }
 
-    setFilteredProducts(updated);
-  };
+  setFilteredProducts(updated);
+};
 
   // SEARCH + SORT APPLIED ON TOP OF ADV FILTER RESULTS
   const finalProducts = filteredProducts

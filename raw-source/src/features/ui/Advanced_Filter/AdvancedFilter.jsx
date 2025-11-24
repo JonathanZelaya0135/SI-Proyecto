@@ -31,7 +31,6 @@ export default function AdvancedFilter({ onApplyFilters, onClose }) {
             name="category"
             value={filters.category}
             onChange={handleChange}
-            required
           >
             <option value="">Selecciona categoría</option>
             <option value="c1">Categoría 1</option>

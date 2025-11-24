@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import AppMenu from "../../features/ui/Menu/Menu";
 import ProductCard from "../../components/ProductCard/ProductCardBuyerInventory";
 import MainTitle from "../../features/ui/Title/MainTitle";
+import AdvancedFilter from "../../features/ui/Advanced_Filter/AdvancedFilter";
 import "./BuyerPage.css";
 
 export default function BuyerInventory() {
@@ -10,6 +11,12 @@ export default function BuyerInventory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("name-asc");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [advancedFilters, setAdvancedFilters] = useState({
+    category: "",
+    price: ""
+  });
+  const [showAdvancedFilter, setShowAdvancedFilter] = useState(false);
+
 
   useEffect(() => {
     const fetchInventoryAndProducts = async () => {
@@ -121,20 +128,46 @@ export default function BuyerInventory() {
   };
 
   const filteredAndSortedItems = inventoryItems
-    .filter((item) =>
-      item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .sort((a, b) => {
-      switch (sortOption) {
-        case "name-desc":
-          return b.product.name.localeCompare(a.product.name);
-        case "name-asc":
-        default:
-          return a.product.name.localeCompare(b.product.name);
-      }
-    });
+  // 🔍 Search filter (name)
+  .filter((item) =>
+    item.product?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  // 🏷 Category Filter (simple filter dropdown)
+  .filter((item) =>
+    categoryFilter === "" ||
+    item.product?.category === categoryFilter
+  )
+
+  // 📦 Advanced Category Filter (from modal, optional)
+  .filter((item) =>
+    advancedFilters.category === "" ||
+    item.product?.category === advancedFilters.category
+  )
+
+  // 💵 Advanced Price Filter (optional exact match)
+  .filter((item) =>
+    advancedFilters.price === "" ||
+    item.product?.price === Number(advancedFilters.price)
+  )
+
+  // 🔠 Sorting
+  .sort((a, b) => {
+    switch (sortOption) {
+      case "name-desc":
+        return b.product.name.localeCompare(a.product.name);
+      case "name-asc":
+      default:
+        return a.product.name.localeCompare(b.product.name);
+    }
+  });
+
 
     const lowStockCount = inventoryItems.filter(i => i.quantity < 5).length;
+
+    const applyAdvancedFilters = (filters) => {
+      setAdvancedFilters(filters);
+    };
 
   return (
     <div className="page-container">
@@ -152,6 +185,17 @@ export default function BuyerInventory() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
           />
+
+          <button onClick={() => setShowAdvancedFilter(true)}>
+            Filtros Avanzados
+          </button>
+
+          {showAdvancedFilter && (
+            <AdvancedFilter
+              onApplyFilters={applyAdvancedFilters}
+              onClose={() => setShowAdvancedFilter(false)}
+            />
+          )}
           
           <select
             className="category-dropdown"
