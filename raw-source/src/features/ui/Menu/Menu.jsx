@@ -2,6 +2,7 @@ import TransparentIconButton from '../Button/TransparentButton';
 import './Menu.css';
 import { useNavigate } from 'react-router-dom';
 import { createHandlers } from '../../handlers/menuHandlers';
+import { useState } from 'react';
 
 
 export default function AppMenu() {
@@ -9,7 +10,8 @@ export default function AppMenu() {
 
   const navigate = useNavigate();
   const handlers= createHandlers(navigate);
-
+  const lowStockCount = parseInt(localStorage.getItem("lowStockCount")) || 0;
+  const [showNotifications, setShowNotifications] =  useState(false);
   
   const name = localStorage.getItem("username");
   const role = localStorage.getItem("role");
